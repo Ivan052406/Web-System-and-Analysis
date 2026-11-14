@@ -1,0 +1,68 @@
+/* ==========================================================================
+   store-directory.css — Store Directory page only
+   ========================================================================== */
+
+/*THIS IS FOR THE CARD / LIST SWITCH*/
+.view-toggle{ display: inline-flex; overflow: hidden; border-radius: 8px; border: 1px solid #ddd0c6; }
+
+.view-toggle button{
+    padding: 9px 13px;
+    border: none;
+    background-color: var(--field);
+    color: var(--muted);
+    cursor: pointer;
+}
+.view-toggle button.active{ background-color: var(--brown); color: #fff; }
+
+/*THIS IS FOR THE A–Z JUMP BAR*/
+.letters{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+    padding: 10px 14px;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.72);
+}
+
+.letters a, .letters span{
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.letters a{ color: var(--brown); }
+.letters a:hover{ background-color: var(--brown); color: #fff; }
+.letters span{ color: #c6b8ae; }
+
+.letter{
+    margin: 22px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--tan);
+    font-size: 20px;
+    color: var(--brown-dark);
+    scroll-margin-top: 80px;
+}
+
+/*THIS IS FOR THE LIST VIEW*/
+.rows{ display: grid; gap: 10px; }
+
+.row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.82);
+    box-shadow: var(--shadow-soft);
+}
+
+.row-main{ flex: 1 1 200px; display: flex; flex-direction: column; min-width: 0; }
+.row-main a{ font-weight: 700; color: var(--ink); text-decoration: none; }
+.row-main a:hover{ text-decoration: underline; }

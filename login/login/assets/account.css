@@ -1,0 +1,254 @@
+/* ==========================================================================
+   account.css — styles for forgetpass.html (the forgot-password page)
+   Same look as login.css (font, background, frosted card, brown buttons,
+   input boxes, social-icon outline, breakpoints), but as one centered card.
+
+   CONTENTS
+   1. COLORS
+   2. RESET AND PAGE BACKGROUND
+   3. CARD
+   4. LOGO, ICON AND TEXT
+   5. FORM
+   6. LINKS AND NOTES
+   7. RESPONSIVE
+   8. ACCESSIBILITY
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* ==========================================================================
+   1. COLORS (change a color here and it changes everywhere)
+   ========================================================================== */
+
+:root{
+    --brown: #5b3e31;
+    --brown-dark: #5c3320;
+    --brown-hover: #8b5a42;
+    --tan: #dba17f;
+    --cream: #f8ebdd;
+    --input-bg: #eee;
+    --text-muted: #555;
+    --error: #c0392b;
+    --card-shadow: 0 5px 15px rgba(113, 50, 2, 0.566);
+}
+
+/* ==========================================================================
+   2. RESET AND PAGE BACKGROUND
+   ========================================================================== */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+[hidden]{ display: none !important; }
+
+/*THIS IS FOR THE PAGE BACKGROUND (same as the login page)*/
+body{
+    background: url('images/casia-bg.svg') center / cover no-repeat fixed var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 24px 16px;
+}
+
+/* ==========================================================================
+   3. CARD
+   ========================================================================== */
+
+/*THIS IS FOR THE CARD (same frosted look as the login container)*/
+.account-card{
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 30px;
+    box-shadow: var(--card-shadow);
+    width: min(420px, 100%);
+    padding: 36px 32px 28px;
+    text-align: center;
+    animation: card-in 0.45s ease-out;
+}
+
+@keyframes card-in{
+    from{ opacity: 0; transform: translateY(14px); }
+    to{ opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   4. LOGO, ICON AND TEXT
+   ========================================================================== */
+
+/*THIS IS FOR THE CASIA LOGO*/
+.account-logo{
+    width: 130px;
+    height: auto;
+    margin-bottom: 14px;
+}
+
+/*THIS IS FOR THE LOCK ICON (same look as the login social icons)*/
+.provider-badge{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 46px;
+    margin: 0 auto 14px;
+    border: 2px solid var(--brown);
+    border-radius: 30%;
+    color: var(--brown);
+    font-size: 20px;
+}
+
+/*THIS IS FOR THE TITLE*/
+.account-card h1{
+    font-size: 26px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+/*THIS IS FOR THE SMALL TEXT UNDER THE TITLE*/
+.account-text{
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+}
+
+/* ==========================================================================
+   5. FORM
+   ========================================================================== */
+
+.account-card form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/*THIS IS FOR THE INPUT BOXES*/
+.account-card input{
+    background-color: var(--input-bg);
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-card input:focus{
+    background-color: #fff;
+    box-shadow: 0 0 0 2px var(--tan);
+}
+
+/*THIS IS FOR THE ERROR MESSAGE UNDER THE INPUTS (takes no space when empty)*/
+.account-message{
+    width: 100%;
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 4px 0 2px;
+    color: var(--error);
+}
+
+.account-message:empty{
+    margin: 0;
+}
+
+/*THIS IS FOR THE CONTINUE BUTTON (same as the login sign in button)*/
+.btn-provider{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px 45px;
+    background-color: var(--brown);
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-provider:hover{
+    background-color: var(--brown-hover);
+}
+
+.btn-provider:active{
+    transform: translateY(1px);
+}
+
+/* ==========================================================================
+   6. LINKS AND NOTES
+   ========================================================================== */
+
+/*THIS IS FOR THE BACK TO SIGN IN LINK (same as the login "Create an account" link)*/
+.back-link{
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--brown);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover{
+    color: var(--brown-hover);
+    text-decoration: underline;
+}
+
+/*DELETE THIS NOTE ONCE THE REAL RESET EMAIL IS CONNECTED*/
+.demo-note{
+    margin-top: 16px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--brown-hover);
+}
+
+/* ==========================================================================
+   7. RESPONSIVE
+   ========================================================================== */
+
+/*PHONES*/
+@media (max-width: 700px){
+    body{ padding: 24px 12px; }
+    .account-card{ padding: 32px 24px 24px; }
+}
+
+/*VERY SMALL PHONES*/
+@media (max-width: 400px){
+    .account-card{ padding: 28px 18px 22px; }
+    .account-card h1{ font-size: 22px; }
+    .account-logo{ width: 110px; }
+    .btn-provider{ padding: 12px 20px; }
+}
+
+/* ==========================================================================
+   8. ACCESSIBILITY
+   ========================================================================== */
+
+/*KEYBOARD FOCUS RING*/
+.btn-provider:focus-visible,
+.back-link:focus-visible{
+    outline: 2px solid var(--tan);
+    outline-offset: 3px;
+}
+
+/*FOR PEOPLE WHO TURN ANIMATIONS OFF IN THEIR DEVICE SETTINGS*/
+@media (prefers-reduced-motion: reduce){
+    .account-card{ animation: none; }
+    .btn-provider,
+    .account-card input{ transition: none; }
+}

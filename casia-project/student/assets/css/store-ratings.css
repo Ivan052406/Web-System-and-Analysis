@@ -1,0 +1,90 @@
+/* ==========================================================================
+   store-ratings.css — Store Ratings page only
+   ========================================================================== */
+
+/*THIS IS FOR THE THREE NUMBERS AT THE TOP*/
+.mini-stats{ display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; }
+
+.mini-stats > div{
+    flex: 1 1 140px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.78);
+    box-shadow: var(--shadow-soft);
+}
+.mini-stats strong{ display: block; font-size: 22px; color: var(--brown-dark); }
+.mini-stats span{ font-size: 12px; color: var(--muted); }
+
+/*THIS IS FOR THE LIST OF STORES ON THE LEFT AND THE RATING PANEL ON THE RIGHT*/
+.rate-layout{
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.rate-list{ display: grid; gap: 10px; }
+
+.rate-item{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 14px 16px;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.82);
+    box-shadow: var(--shadow-soft);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+}
+.rate-item:hover{ transform: translateY(-2px); }
+.rate-item.active{ border-color: var(--brown); }
+
+.ri-name{ font-size: 14px; font-weight: 700; color: var(--ink); }
+.ri-meta{ font-size: 12px; color: var(--muted); }
+.ri-mine{ font-size: 11.5px; font-weight: 700; color: var(--ok); }
+.ri-todo{ font-size: 11.5px; font-weight: 600; color: var(--warn); }
+
+.rate-panel .panel{ margin-bottom: 0; }
+.rate-panel h2{ font-size: 21px; }
+.rate-panel h2 a{ color: var(--brown-dark); text-decoration: none; }
+.rate-panel h2 a:hover{ text-decoration: underline; }
+
+.summary-row{
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 24px;
+    align-items: center;
+    margin: 18px 0 22px;
+}
+
+.big-avg{ display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.big-avg strong{ font-size: 40px; line-height: 1; color: var(--brown-dark); }
+
+.rate-title{ margin-bottom: 8px; font-size: 15px; color: var(--brown-dark); }
+
+/*THIS IS FOR THE BIG TAP-A-STAR ROW*/
+.star-input{ display: flex; align-items: center; gap: 4px; }
+
+.star{
+    border: none;
+    background: none;
+    color: #d9cfc8;
+    font-size: 38px;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.12s, color 0.12s;
+}
+.star:hover{ transform: scale(1.15); color: var(--star); }
+.star.on{ color: var(--star); }
+.star-label{ margin-left: 10px; font-size: 13px; font-weight: 700; color: var(--brown); }
+
+.top-gap{ margin-top: 18px; }
+
+.rate-actions{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+@media (max-width: 800px){
+    .rate-layout{ grid-template-columns: 1fr; }
+    .summary-row{ grid-template-columns: 1fr; }
+}

@@ -1,0 +1,58 @@
+/* ==========================================================================
+   availability.css — Availability Check page only
+   ========================================================================== */
+
+/*THIS IS FOR THE "X of Y available" BAR*/
+.status-bar{ padding: 18px 24px; display: grid; gap: 8px; }
+.status-main{ font-size: 15px; color: var(--brown-dark); }
+.status-main strong{ font-size: 22px; }
+
+.status-bar-track{ height: 10px; border-radius: 999px; background-color: #eadfd8; overflow: hidden; }
+.status-bar-track span{ display: block; height: 100%; border-radius: 999px; background-color: var(--ok); transition: width 0.4s; }
+
+.alert{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    border-radius: 16px;
+    background-color: var(--ok-bg);
+    color: var(--ok);
+    font-size: 13px;
+}
+.alert > div{ flex: 1; }
+.alert i{ font-size: 18px; }
+
+.search{ flex: 1 1 200px; max-width: 260px; }
+
+/*THIS IS FOR THE TABLE*/
+.table-wrap{
+    overflow-x: auto;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.82);
+    box-shadow: var(--shadow-soft);
+}
+
+.table{ width: 100%; border-collapse: collapse; font-size: 13px; }
+
+.table th, .table td{
+    padding: 13px 18px;
+    border-bottom: 1px solid #eee3dc;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.table th{
+    background-color: rgba(248, 235, 221, 0.8);
+    color: var(--muted);
+    font-size: 11.5px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.table tr:last-child td{ border-bottom: none; }
+.table a{ color: var(--ink); text-decoration: none; }
+.table a:hover{ text-decoration: underline; }
+.warn-text{ color: var(--warn); font-weight: 600; }
+.actions{ text-align: right; white-space: nowrap; }

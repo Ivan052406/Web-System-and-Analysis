@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/loginadmin.css">
+    <title>CASIA | Admin</title>
+</head>
+
+<body>
+
+    <a href="../login/login.html" class="admin-link">
+        <i class="fa-solid fa-arrow-left"></i> Back to User Login
+    </a>
+
+    <div class="container" id="container">
+
+        <!-- ===================== BUSINESS CREATION / ADMIN SIGN UP ===================== -->
+        <div class="form-container sign-up">
+            <form method="post" action="/admin/signup">
+                <h1>Create Business</h1>
+                <span>set up your company and administrator account</span>
+
+                <input type="text" name="name" placeholder="Company Name" autocomplete="organization" required>
+
+                <div class="form-row">
+                    <select name="company_type" aria-label="Company Type" required>
+                        <option value="" disabled selected>Company Type</option>
+                        <option value="school_canteen">School Canteen</option>
+                        <option value="office_cafeteria">Office Cafeteria</option>
+                        <option value="restaurant">Restaurant / Eatery</option>
+                        <option value="cafe_bakery">Cafe / Bakery</option>
+                        <option value="food_stall">Food Stall / Kiosk</option>
+                        <option value="catering">Catering Service</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <input type="tel" name="contact" placeholder="Contact Number" autocomplete="tel" inputmode="tel"
+                        pattern="[0-9+ \-]{7,20}" title="Enter a valid contact number" required>
+                </div>
+
+                <input type="email" name="email" placeholder="Company Email" autocomplete="email" required>
+
+                <input type="text" name="address" placeholder="Company Address" autocomplete="street-address" required>
+
+                <div class="form-row">
+                    <div class="password-input">
+                        <input type="password" name="password" placeholder="Password" id="adminSignupPassword" autocomplete="new-password" required>
+                        <i class="fa-solid fa-eye toggle-password" data-target="adminSignupPassword" role="button" aria-label="Show or hide password"></i>
+                    </div>
+
+                    <div class="password-input">
+                        <input type="password" name="confirm_password" placeholder="Confirm Password" id="adminSignupConfirm" autocomplete="new-password" required>
+                        <i class="fa-solid fa-eye toggle-password" data-target="adminSignupConfirm" role="button" aria-label="Show or hide password"></i>
+                    </div>
+                </div>
+
+                <!-- Unique Access Code: layout only, validation to be wired up later -->
+                <div class="icon-input">
+                    <i class="fa-solid fa-key field-icon"></i>
+                    <input type="text" name="admin_code" class="access-code" placeholder="Unique Access Code" autocomplete="off" spellcheck="false" required>
+                </div>
+
+                <button type="submit">Create Business</button>
+
+                <p class="signup-link">
+                    Already have an account?
+                    <a href="#" data-switch="login">Sign In</a>
+                </p>
+            </form>
+        </div>
+
+        <!-- ===================== ADMIN SIGN IN ===================== -->
+        <div class="form-container sign-in">
+            <form method="post" action="/admin/login">
+                <h1 class="signin">COMPANY SIGN IN</h1>
+                <span>use your administrator email and password</span>
+                <input type="email" name="email" placeholder="Email" id="adminSigninEmail" autocomplete="email" required>
+
+                <div class="password-input">
+                    <input type="password" name="password" placeholder="Password" id="adminSigninPassword" autocomplete="current-password" required>
+                    <i class="fa-solid fa-eye toggle-password" data-target="adminSigninPassword" role="button" aria-label="Show or hide password"></i>
+                </div>
+
+                <label class="remember-account">
+                    <input type="checkbox" name="remember" id="adminRemember">
+                    Remember my account
+                </label>
+                    <a href="assets/forgetpass.html">Forgot your password?</a>
+                <button type="submit">Sign In</button>
+                
+
+                <p class="signup-link">
+                    New Admin?
+                    <a href="#" data-switch="register">Create a business</a>
+                </p>
+            </form>
+        </div>
+
+        <!-- ===================== SLIDING PANEL ===================== -->
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <img class="brand-logo" src="assets/images/casia-logo.png" alt="CASIA logo">
+                    <h1>Welcome Back, Admin!</h1>
+                    <p>Sign in to manage users and site settings</p>
+                    <button type="button" class="hidden" id="login">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <img class="brand-logo" src="assets/images/casia-logo.png" alt="CASIA logo">
+                    <h1>New Admin?</h1>
+                    <p>Register your business with your access code to get administrator privileges</p>
+                    <button type="button" class="hidden" id="register">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/loginadmin.js"></script>
+</body>
+
+</html>

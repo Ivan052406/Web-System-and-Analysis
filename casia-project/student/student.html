@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="assets/images/casia-logo.png">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/student.css">
+    <title>Home | CASIA Canteen</title>
+</head>
+<body data-page="home" data-title="Home">
+
+    <div class="app">
+
+        <!-- SIDE NAVIGATION (built by assets/js/shell.js) -->
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="backdrop" id="backdrop"></div>
+
+        <div class="main">
+            <header class="topbar">
+                <button class="menu-btn" id="menuBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+                <span class="topbar-title" id="topbarTitle"></span>
+                <span class="topbar-user" id="topbarUser"></span>
+            </header>
+
+            <main class="page">
+                <div class="page-head"><h1 id="greeting">Welcome!</h1><p id="greetingSub"></p></div>
+                <div id="alerts"></div>
+                <section class="stats" id="stats"></section>
+
+                <h2 class="section-title">What would you like to do?</h2>
+                <section class="tiles" id="tiles"></section>
+
+                <h2 class="section-title">Open right now</h2>
+                <div id="openNow"></div>
+
+                <div id="viewedBlock" hidden>
+                    <h2 class="section-title">Recently viewed</h2>
+                    <div class="grid" id="viewed"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Load order matters: data.js, then shell.js, then this page's script -->
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/shell.js"></script>
+    <script src="assets/js/student.js"></script>
+</body>
+</html>

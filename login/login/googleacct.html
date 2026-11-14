@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="assets/images/casia-logo.png">
+    <link rel="stylesheet" href="assets/googleacct.css">
+    <title>Continue with Google | CASIA</title>
+</head>
+<body class="google" data-provider="google">
+
+    <div class="account-card">
+        <img class="account-logo" src="assets/images/casia-logo.png" alt="CASIA logo">
+        <div class="provider-badge"><i class="fa-brands fa-google"></i></div>
+
+        <h1>Continue with Google</h1>
+        <p class="account-text">Sign in with your Google account. If you're new, we'll create your CASIA Canteen account for you.</p>
+
+        <!-- The sign-in button. assets/account.js turns it on once your Google keys are set -->
+        <div id="providerButton" class="provider-slot"></div>
+
+        <!-- Success, error and "not set up yet" messages show here -->
+        <div class="account-message" id="accountMessage" role="alert"></div>
+
+        <a href="login.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Sign In</a>
+    </div>
+
+    <!-- Load order matters: auth.js, then social-config.js, then account.js -->
+    <script src="assets/auth.js"></script>
+    <script src="assets/social-config.js"></script>
+    <script src="assets/account.js"></script>
+</body>
+</html>
