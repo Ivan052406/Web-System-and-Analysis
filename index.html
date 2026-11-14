@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | Store Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="dashboard" data-root="" data-title="Dashboard">
+<div class="app">
+  <!-- Sidebar and top bar are built by js/app.js so they stay identical on every page -->
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+    <main class="content">
+      <section class="page">
+        <div class="cards">
+          <div class="card"><div class="card-label">Total products</div><div class="card-value" id="dashProducts">0</div></div>
+          <div class="card"><div class="card-label">Total stock</div><div class="card-value" id="dashStock">0</div></div>
+          <div class="card warn"><div class="card-label">Low stock</div><div class="card-value" id="dashLow">0</div></div>
+          <div class="card danger"><div class="card-label">Out of stock</div><div class="card-value" id="dashOut">0</div></div>
+          <div class="card"><div class="card-label">Today's sales</div><div class="card-value" id="dashToday">₱0.00</div></div>
+          <div class="card"><div class="card-label">Transactions today</div><div class="card-value" id="dashTxns">0</div></div>
+        </div>
+
+        <div class="panel">
+          <h2>Stock alerts</h2>
+          <div id="dashAlerts"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Recent inventory activity</h2>
+            <div class="btn-group">
+              <a class="btn" href="modules/inventory.html">Inventory</a>
+              <a class="btn" href="modules/restocking.html">Restocking</a>
+              <a class="btn" href="modules/sales-analytics.html">Sales &amp; Analytics</a>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date and time</th><th>Product</th><th>Type</th><th class="num">Change</th><th class="num">Updated stock</th></tr></thead>
+              <tbody id="dashRecent"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="storage.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
