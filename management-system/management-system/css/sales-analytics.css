@@ -1,0 +1,14 @@
+/* sales-analytics.css - styles used only on the Sales and Analytics page */
+.segmented { display: inline-flex; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
+.segmented button { font: inherit; border: 0; background: var(--white); padding: 7px 16px; cursor: pointer; color: var(--muted); }
+.segmented button + button { border-left: 1px solid var(--line); }
+.segmented button.active { background: var(--pine); color: #fff; }
+
+/* New sale form */
+.sale-line { display: grid; grid-template-columns: 1fr 80px 100px auto; gap: 8px; margin-bottom: 8px; align-items: center; }
+.line-sub { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.sale-total { margin: 10px 0 0; font-size: 1.05rem; text-align: right; }
+@media (max-width: 560px) {
+  .sale-line { grid-template-columns: 1fr 70px auto; }
+  .line-sub { display: none; }
+}
