@@ -1,0 +1,66 @@
+/* ==========================================================================
+   product-details.css — Product Details page only
+   ========================================================================== */
+
+/*THIS IS FOR THE TOP PANEL: NAME, PRICE, AVAILABILITY*/
+.product-head{
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 24px;
+    margin-bottom: 18px;
+}
+
+.product-main h1{ margin: 10px 0 6px; font-size: 28px; color: var(--brown-dark); }
+.big-price{ margin-bottom: 10px; font-size: 26px; font-weight: 700; color: var(--brown); }
+.desc{ margin-bottom: 12px; font-size: 14px; color: var(--muted); }
+
+/*THIS IS FOR THE AVAILABILITY BOX*/
+.avail{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px;
+    border-radius: 18px;
+    text-align: center;
+    align-items: center;
+}
+.avail.is-ok{ background-color: var(--ok-bg); color: var(--ok); }
+.avail.is-out{ background-color: var(--bad-bg); color: var(--bad); }
+.avail > i{ font-size: 34px; }
+.avail strong{ font-size: 16px; }
+.avail .note{ padding: 6px 10px; border-radius: 8px; background-color: var(--warn-bg); color: var(--warn); font-size: 12px; }
+.avail small{ color: var(--muted); }
+
+.info-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.info-card{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.82);
+    box-shadow: var(--shadow-soft);
+}
+.info-card h3{ font-size: 14px; color: var(--brown-dark); }
+.info-card h3 i{ width: 20px; color: var(--tan); }
+.info-card .dist{ width: 100%; }
+.avg{ font-size: 24px; color: var(--brown-dark); }
+
+.mini-review{
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.82);
+}
+.mini-review p{ font-size: 13px; }
+.mini-review small{ color: var(--muted); }
+
+@media (max-width: 700px){
+    .product-head{ grid-template-columns: 1fr; }
+}

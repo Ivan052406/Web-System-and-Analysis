@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="images/casia-logo.png">
+    <!-- This file lives inside assets/, so paths are relative to assets/ -->
+    <link rel="stylesheet" href="assets/account.css">
+    <title>Forgot Password | CASIA</title>
+</head>
+<body>
+
+    <div class="account-card">
+        <img class="account-logo" src="assets/images/casia-logo.png" alt="CASIA logo">
+        <div class="provider-badge"><i class="fa-solid fa-lock"></i></div>
+
+        <h1>Forgot Password?</h1>
+        <p class="account-text" id="forgotText">Enter the email you registered with and we'll help you set a new password.</p>
+
+        <!-- Step 1: find the account -->
+        <form id="findForm" novalidate>
+            <input type="email" id="forgotEmail" placeholder="Email" autocomplete="email" required>
+            <div class="account-message" id="findMessage" role="alert"></div>
+            <button type="submit" class="btn-provider">Find my account</button>
+        </form>
+
+        <!-- Step 2: choose a new password (shown after the account is found) -->
+        <form id="resetForm" novalidate hidden>
+            <input type="password" id="newPassword" placeholder="New password" autocomplete="new-password" required>
+            <input type="password" id="confirmNewPassword" placeholder="Confirm new password" autocomplete="new-password" required>
+            <div class="account-message" id="resetMessage" role="alert"></div>
+            <button type="submit" class="btn-provider">Save new password</button>
+        </form>
+
+        <a href="login.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Sign In</a>
+
+        <p class="demo-note">Demo mode: no email is sent. Once your backend can email a reset link, replace step 1 with a request to it and delete this note.</p>
+    </div>
+
+    <script src="assets/auth.js"></script>
+    <script src="assets/forgetpass.js"></script>
+</body>
+</html>

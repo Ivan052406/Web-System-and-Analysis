@@ -1,0 +1,40 @@
+/* ==========================================================================
+   product-ratings.css — Product Ratings page only
+   ========================================================================== */
+
+/*THIS IS FOR THE THREE NUMBERS AT THE TOP*/
+.mini-stats{ display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; }
+
+.mini-stats > div{
+    flex: 1 1 140px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.78);
+    box-shadow: var(--shadow-soft);
+}
+.mini-stats strong{ display: block; font-size: 22px; color: var(--brown-dark); }
+.mini-stats span{ font-size: 12px; color: var(--muted); }
+
+.search{ flex: 1 1 200px; max-width: 260px; }
+
+/*THIS IS FOR THE TAP-A-STAR ROW ON EACH PRODUCT*/
+.mine-box{ margin-top: 6px; padding: 10px 12px; border-radius: 14px; background-color: var(--cream); }
+.mine-box .field-label{ margin-bottom: 2px; }
+
+.star-row{ display: flex; gap: 2px; }
+
+.star{
+    border: none;
+    background: none;
+    color: #d3c7bf;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.12s, color 0.12s;
+}
+.star:hover{ transform: scale(1.18); color: var(--star); }
+.star.on{ color: var(--star); }
+.star-row.big .star{ font-size: 38px; }
+
+.card-actions{ display: flex; gap: 8px; margin-top: 4px; }
+.top-gap{ margin-top: 16px; }

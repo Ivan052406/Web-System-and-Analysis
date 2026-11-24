@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/login.css">
+    <link rel="stylesheet" href="assets/password-toggle.css">
+    <title>CasiaLogin</title>
+</head>
+
+<body>
+
+    <a href="../admin/loginadmin.html" class="admin-link">
+        <i class="fa-solid fa-user-shield"></i> Admin Sign In / Sign Up
+    </a>
+
+    <div class="container" id="container">
+
+        <!-- SIGN UP -->
+        <div class="form-container sign-up">
+            <form>
+                <h1>Create Account</h1>
+
+                <div class="social-icons">
+                    <a href="googleacct.html" class="icon" aria-label="Sign up with Google"><i class="fa-brands fa-google"></i></a>
+                    <a href="appleacct.html" class="icon" aria-label="Sign up with Apple"><i class="fa-brands fa-apple"></i></a>
+                    <a href="facebookacct.html" class="icon" aria-label="Sign up with Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+
+                <span>or use your email for registration</span>
+
+                <input type="text" name="name" placeholder="Name" autocomplete="name" required>
+
+                <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+
+                <div class="password-input">
+                    <input type="password" name="password" placeholder="Password" id="signupPassword" autocomplete="new-password" required>
+                    <i class="fa-solid fa-eye toggle-password" data-target="signupPassword"></i>
+                </div>
+
+                <div class="password-input">
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" id="signupConfirmPassword" autocomplete="new-password" required>
+                    <i class="fa-solid fa-eye toggle-password" data-target="signupConfirmPassword"></i>
+                </div>
+
+                <button type="submit">Sign Up</button>
+
+                <p class="signup-link">
+                    Already have an account?
+                    <!-- href is "#" because login.js switches the form instead of leaving the page -->
+                    <a href="#" data-switch="login">Sign In</a>
+                </p>
+
+            </form>
+        </div>
+
+        <!-- SIGN IN -->
+        <div class="form-container sign-in">
+            <form>
+
+                <h1 class="signin">Sign In</h1>
+
+                <div class="social-icons">
+                    <a href="googleacct.html" class="icon" aria-label="Sign in with Google"><i class="fa-brands fa-google"></i></a>
+                    <a href="appleacct.html" class="icon" aria-label="Sign in with Apple"><i class="fa-brands fa-apple"></i></a>
+                    <a href="facebookacct.html" class="icon" aria-label="Sign in with Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+
+                <span>or use your email and password</span>
+
+                <input type="email" name="email" placeholder="Email" id="signinEmail" autocomplete="email" required>
+
+                <div class="password-input">
+                    <input type="password" name="password" placeholder="Password" id="signinPassword" autocomplete="current-password" required>
+                    <i class="fa-solid fa-eye toggle-password" data-target="signinPassword"></i>
+                </div>
+
+                <label class="remember-account">
+                    <input type="checkbox" name="remember" id="rememberAccount">
+                    Remember my account
+                </label>
+
+                <a href="forgetpass.html">Forgot your password?</a>
+
+                <button type="submit">Sign In</button>
+
+                <p class="signup-link">
+                    New Here?
+                    <a href="#" data-switch="register">Create an account</a>
+                </p>
+
+            </form>
+        </div>
+
+        <!-- TOGGLE -->
+        <div class="toggle-container">
+            <div class="toggle">
+
+                <div class="toggle-panel toggle-left">
+
+                    <img class="brand-logo" src="assets/images/casia-logo.png" alt="CASIA logo">
+
+                    <h1>Welcome Back!</h1>
+                    <p>Enter your personal details to use all of site features</p>
+                    <button type="button" class="hidden" id="login">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+
+                    <img class="brand-logo" src="assets/images/casia-logo.png" alt="CASIA logo">
+
+                    <h1>Hello, Friend!</h1>
+                    <p>Register with your personal details to use all of site features</p>
+                    <button type="button" class="hidden" id="register">Sign Up</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- auth.js must come before login.js -->
+    <script src="assets/auth.js"></script>
+    <script src="assets/login.js"></script>
+
+</body>
+</html>

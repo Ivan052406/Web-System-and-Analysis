@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CASIA Web System
 
 CASIA is a single Express application with separate Admin/Business Owner and Student frontends, a Staff cashier workspace, and a Supabase PostgreSQL database. It uses the existing HTML, CSS, vanilla JavaScript, Express, and Supabase stack.
@@ -130,3 +131,6 @@ New businesses automatically receive an active `Main Branch` during Business Own
 ## Login repair and password recovery setup
 
 See [docs/LOGIN_STABILITY_AND_RECOVERY_SETUP.md](docs/LOGIN_STABILITY_AND_RECOVERY_SETUP.md) for the cookie/session fix, required SQL role-constraint migration, and Supabase SMTP/redirect configuration.
+=======
+# Web-System-and-Analysis
+>>>>>>> 15d202bed52e443cdd7d0e4caa7d68cdd32d23dc

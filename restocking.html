@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Restocking Management | Store Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/restocking.css">
+</head>
+<body data-page="restocking" data-root="../" data-title="Restocking Management">
+<div class="app">
+  <!-- Sidebar and top bar are built by js/app.js so they stay identical on every page -->
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+    <main class="content">
+      <section class="page">
+        <div class="cards">
+          <div class="card"><div class="card-label">Suppliers</div><div class="card-value" id="rsSupplierCount">0</div></div>
+          <div class="card"><div class="card-label">Restock records</div><div class="card-value" id="rsTxnCount">0</div></div>
+          <div class="card"><div class="card-label">Units received</div><div class="card-value" id="rsUnits">0</div></div>
+          <div class="card"><div class="card-label">Total restock cost</div><div class="card-value" id="rsCost">₱0.00</div></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel"><h2>Quantity restocked per product</h2><div class="chart-box"><canvas id="rsBarChart"></canvas></div></div>
+          <div class="panel"><h2>Restocking activity over time</h2><div class="chart-box"><canvas id="rsLineChart"></canvas></div></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h2>Suppliers</h2><button class="btn primary" id="btnAddSupplier">Add supplier</button></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Supplier ID</th><th>Supplier name</th><th>Contact number</th><th>Email</th><th>Address</th><th>Actions</th></tr></thead>
+              <tbody id="supplierBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h2>Restocking history and records</h2><button class="btn primary" id="btnRestock">Record restock</button></div>
+          <div class="toolbar">
+            <input type="search" id="rsSearch" placeholder="Search restock ID, product or supplier">
+            <select id="rsSupplier"></select>
+            <select id="rsProduct"></select>
+            <label class="inline-field">From <input type="date" id="rsFrom"></label>
+            <label class="inline-field">To <input type="date" id="rsTo"></label>
+            <button class="btn ghost small" id="rsClear">Clear filters</button>
+          </div>
+          <p class="muted count-line" id="rsCount"></p>
+          <div class="table-wrap tall">
+            <table>
+              <thead><tr>
+                <th>Restock ID</th><th>Product</th><th>Supplier</th><th class="num">Quantity</th>
+                <th class="num">Unit cost</th><th class="num">Total cost</th><th>Date</th><th>Status</th>
+              </tr></thead>
+              <tbody id="rsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../js/storage.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/restocking.js"></script>
+</body>
+</html>

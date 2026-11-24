@@ -1,0 +1,4 @@
+/* restocking.css - styles used only on the Restocking page */
+.row-actions { display: flex; gap: 6px; }
+#supplierBody td.wrap { max-width: 320px; }
+#rsBody td.num { font-variant-numeric: tabular-nums; }

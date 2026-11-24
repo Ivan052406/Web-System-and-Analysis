@@ -1,0 +1,70 @@
+/* ==========================================================================
+   product-search.css — Product Search page only
+   ========================================================================== */
+
+.search-hero{ max-width: 640px; margin: 0 auto 22px; }
+
+/*THIS IS FOR THE BIG SEARCH BOX*/
+.search-box{ position: relative; }
+
+.search-box > i{
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8c7d74;
+    pointer-events: none;
+}
+
+.search-box .input{
+    padding: 16px 46px 16px 50px;
+    border-radius: 999px;
+    background-color: #fff;
+    font-size: 14px;
+    box-shadow: var(--shadow-soft);
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.search-box .input::-webkit-search-cancel-button{ display: none; }
+
+.clear{
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--field);
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+.clear:hover{ background-color: #e4d9d0; }
+
+.recent{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 14px; }
+
+/*THIS IS FOR THE FILTER PANEL*/
+.filters{
+    display: grid;
+    grid-template-columns: 2fr 1.3fr 1fr auto;
+    align-items: end;
+    gap: 16px 22px;
+    padding: 18px 22px;
+    border-radius: 22px;
+}
+
+.filter .select{ width: 100%; }
+.filter input[type="range"]{ width: 100%; accent-color: var(--brown); }
+
+@media (max-width: 900px){
+    .filters{ grid-template-columns: 1fr 1fr; }
+    .filter:first-child{ grid-column: 1 / -1; }
+}
+
+@media (max-width: 520px){
+    .filters{ grid-template-columns: 1fr; }
+}

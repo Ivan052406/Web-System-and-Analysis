@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CASIA – Demand &amp; Restock Insights</title>
+  <link rel="stylesheet" href="assets/restock.css">
+</head>
+<body>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu">&#9776;</button>
+  <aside class="sidebar" id="sidebar">
+    <h1 class="brand">CASIA</h1>
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="#">Sales &amp; Products</a>
+      <a href="#">Inventory Management</a>
+      <a href="#" class="active">Restock</a>
+      <a href="#">Customer Management</a>
+      <a href="#">Reports</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <h2>Welcome, Staff!</h2>
+      <span class="user">Staff</span>
+    </header>
+
+    <!-- Actions -->
+    <div class="toolbar">
+      <button class="btn btn-primary" id="btn-add">+ Add product</button>
+      <button class="btn" id="btn-import" title="Columns: name, stock, then units sold Mon–Sun">Import CSV</button>
+      <button class="btn" id="btn-export">Export CSV</button>
+      <button class="btn btn-ghost btn-danger toolbar-end" id="btn-clear">Clear all</button>
+      <input type="file" id="csv-input" accept=".csv,text/csv" hidden>
+    </div>
+
+    <!-- KPI cards -->
+    <section class="grid grid-kpi">
+      <div class="card kpi"><span>Total units sold (7 days)</span><b id="kpi-sold">0</b></div>
+      <div class="card kpi"><span>Avg. daily demand</span><b id="kpi-demand">0</b></div>
+      <div class="card kpi"><span>Suggested restock (units)</span><b id="kpi-restock">0</b></div>
+      <div class="card kpi"><span>Products to restock</span><b id="kpi-count">0</b></div>
+    </section>
+
+    <!-- Restock settings -->
+    <section class="card settings">
+      <div class="settings-head">
+        <h3>Restock settings</h3>
+        <button class="btn btn-sm btn-ghost" id="btn-reset-settings">Reset</button>
+      </div>
+      <div class="settings-grid">
+        <label class="field">Delivery time (days)
+          <input type="number" id="set-lead" min="0" step="0.5">
+        </label>
+        <label class="field">Safety stock (days)
+          <input type="number" id="set-safety" min="0" step="0.5">
+        </label>
+        <label class="field">Stock up to (days of sales)
+          <input type="number" id="set-target" min="1" step="0.5">
+        </label>
+      </div>
+      <details class="how">
+        <summary>How these numbers are worked out</summary>
+        <ul>
+          <li><b>Avg. daily demand</b> – the 7-day average, leaning on the last 3 days (60% week average + 40% last 3 days).</li>
+          <li><b>Trend</b> – last 3 days compared with the first 3 days. ▲ rising, ▼ falling, ▶ steady (less than 5% change).</li>
+          <li><b>Days of stock left</b> – current stock ÷ daily demand.</li>
+          <li><b>Restock now</b> – stock will run out before a delivery arrives (fewer days left than the delivery time). <b>Restock soon</b> – fewer days left than delivery time + safety stock.</li>
+          <li><b>Suggested restock</b> – daily demand × (delivery time + stock-up-to days) − current stock.</li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- Charts -->
+    <section class="grid grid-wide-narrow">
+      <div class="card">
+        <div class="card-head">
+          <h3>Demand trend</h3>
+          <select id="trend-pick" aria-label="Choose what the trend chart shows"></select>
+        </div>
+        <div id="trend-box"></div>
+      </div>
+      <div class="card">
+        <h3>Demand overview</h3>
+        <div id="share-box"></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>Current stock vs expected demand</h3>
+        <p class="hint">Brown shorter than tan = stock will not last until a delivery arrives.</p>
+        <div id="stock-box"></div>
+      </div>
+    </section>
+
+    <!-- Restock suggestions (full width so every column fits) -->
+    <section class="grid">
+      <div class="card">
+        <div class="card-head">
+          <h3>Restock suggestions</h3>
+          <input type="search" id="search" class="search" placeholder="Search product" aria-label="Search product">
+        </div>
+        <div class="chips">
+          <button class="chip active" data-filter="all">All <span id="count-all">0</span></button>
+          <button class="chip" data-filter="low">Needs restock <span id="count-low">0</span></button>
+          <button class="chip" data-filter="ok">OK <span id="count-ok">0</span></button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-sort="n"><button>Product</button></th>
+                <th data-sort="stock"><button>Current stock</button></th>
+                <th data-sort="demand"><button>Daily demand</button></th>
+                <th data-sort="change"><button>Trend</button></th>
+                <th data-sort="days"><button>Stock lasts</button></th>
+                <th data-sort="restock"><button>Suggested restock</button></th>
+                <th data-sort="status"><button>Status</button></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="restock-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add / edit product -->
+  <dialog id="product-dialog">
+    <form id="product-form" novalidate>
+      <h3 id="dialog-title">Add product</h3>
+      <label class="field">Product name
+        <input type="text" id="p-name" maxlength="40" autocomplete="off">
+      </label>
+      <label class="field">Current stock
+        <input type="number" id="p-stock" min="0" step="1" inputmode="numeric">
+      </label>
+      <fieldset class="week">
+        <legend>Units sold per day (last 7 days)</legend>
+        <div class="week-grid" id="week-grid"></div>
+      </fieldset>
+      <p class="form-error" id="form-error" role="alert"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" id="dialog-cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save product</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <!-- App (data + logic, including the phone menu) -->
+  <script src="assets/restock.js"></script>
+</body>
+</html>

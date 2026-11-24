@@ -1,0 +1,230 @@
+/* ==========================================================================
+   facebookacct.css — styles for facebookacct.html
+   Same look as login.css (font, background, frosted card, brown button,
+   outlined icon box, breakpoints), as one centered card.
+
+   CONTENTS
+   1. COLORS
+   2. RESET AND PAGE BACKGROUND
+   3. CARD
+   4. LOGO, ICON AND TEXT
+   5. SIGN-IN BUTTON AND MESSAGES
+   6. LINKS
+   7. RESPONSIVE
+   8. ACCESSIBILITY
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* ==========================================================================
+   1. COLORS (change a color here and it changes everywhere)
+   ========================================================================== */
+
+:root{
+    --brown: #5b3e31;
+    --brown-hover: #8b5a42;
+    --tan: #dba17f;
+    --cream: #f8ebdd;
+    --text-muted: #555;
+    --error: #c0392b;
+    --card-shadow: 0 5px 15px rgba(113, 50, 2, 0.566);
+}
+
+/* ==========================================================================
+   2. RESET AND PAGE BACKGROUND
+   ========================================================================== */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/*THIS IS FOR THE PAGE BACKGROUND (same as the login page)*/
+body{
+    background: url('images/casia-bg.svg') center / cover no-repeat fixed var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 24px 16px;
+}
+
+/* ==========================================================================
+   3. CARD
+   ========================================================================== */
+
+/*THIS IS FOR THE CARD (same frosted look as the login container)*/
+.account-card{
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 30px;
+    box-shadow: var(--card-shadow);
+    width: min(420px, 100%);
+    padding: 36px 32px 28px;
+    text-align: center;
+    animation: card-in 0.45s ease-out;
+}
+
+@keyframes card-in{
+    from{ opacity: 0; transform: translateY(14px); }
+    to{ opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   4. LOGO, ICON AND TEXT
+   ========================================================================== */
+
+/*THIS IS FOR THE CASIA LOGO*/
+.account-logo{
+    width: 130px;
+    height: auto;
+    margin-bottom: 14px;
+}
+
+/*THIS IS FOR THE FACEBOOK ICON (same look as the login social icons)*/
+.provider-badge{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 46px;
+    margin: 0 auto 14px;
+    border: 2px solid var(--brown);
+    border-radius: 30%;
+    color: var(--brown);
+    font-size: 20px;
+}
+
+/*THIS IS FOR THE TITLE*/
+.account-card h1{
+    font-size: 26px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+/*THIS IS FOR THE SMALL TEXT UNDER THE TITLE*/
+.account-text{
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+    color: var(--text-muted);
+    margin-bottom: 22px;
+}
+
+/* ==========================================================================
+   5. SIGN-IN BUTTON AND MESSAGES
+   ========================================================================== */
+
+/*THIS IS FOR THE SIGN-IN BUTTON (same as the login sign in button)*/
+.btn-provider{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 45px;
+    background-color: var(--brown);
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-provider:hover:not(:disabled){
+    background-color: var(--brown-hover);
+}
+
+.btn-provider:active:not(:disabled){
+    transform: translateY(1px);
+}
+
+.btn-provider:disabled{
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/*THIS IS FOR THE SPOT WHERE GOOGLE DRAWS ITS OWN BUTTON*/
+.provider-slot{
+    display: flex;
+    justify-content: center;
+    min-height: 44px;
+}
+
+/*THIS IS FOR THE MESSAGE UNDER THE BUTTON (takes no space when empty)*/
+.account-message{
+    margin-top: 14px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--error);
+}
+
+.account-message.info{
+    color: var(--text-muted);
+}
+
+.account-message:empty{
+    margin: 0;
+}
+
+/* ==========================================================================
+   6. LINKS
+   ========================================================================== */
+
+/*THIS IS FOR THE BACK TO SIGN IN LINK (same as the login "Create an account" link)*/
+.back-link{
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--brown);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover{
+    color: var(--brown-hover);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   7. RESPONSIVE
+   ========================================================================== */
+
+/*PHONES*/
+@media (max-width: 700px){
+    body{ padding: 24px 12px; }
+    .account-card{ padding: 32px 24px 24px; }
+}
+
+/*VERY SMALL PHONES*/
+@media (max-width: 400px){
+    .account-card{ padding: 28px 18px 22px; }
+    .account-card h1{ font-size: 22px; }
+    .account-logo{ width: 110px; }
+    .btn-provider{ padding: 12px 20px; }
+}
+
+/* ==========================================================================
+   8. ACCESSIBILITY
+   ========================================================================== */
+
+/*KEYBOARD FOCUS RING*/
+.btn-provider:focus-visible,
+.back-link:focus-visible{
+    outline: 2px solid var(--tan);
+    outline-offset: 3px;
+}
+
+/*FOR PEOPLE WHO TURN ANIMATIONS OFF IN THEIR DEVICE SETTINGS*/
+@media (prefers-reduced-motion: reduce){
+    .account-card{ animation: none; }
+    .btn-provider{ transition: none; }
+}

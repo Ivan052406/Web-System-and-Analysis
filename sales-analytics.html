@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sales & Customer Analytics | Store Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/sales-analytics.css">
+</head>
+<body data-page="sales" data-root="../" data-title="Sales &amp; Customer Analytics">
+<div class="app">
+  <!-- Sidebar and top bar are built by js/app.js so they stay identical on every page -->
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+    <main class="content">
+      <section class="page">
+        <div class="cards">
+          <div class="card"><div class="card-label">Today's sales</div><div class="card-value" id="anToday">₱0.00</div><div class="card-sub" id="anTodaySub"></div></div>
+          <div class="card"><div class="card-label">Transactions</div><div class="card-value" id="anTxns">0</div><div class="card-sub" id="anTxnsSub"></div></div>
+          <div class="card"><div class="card-label">Items sold</div><div class="card-value" id="anItems">0</div><div class="card-sub" id="anItemsSub"></div></div>
+          <div class="card accent"><div class="card-label">Peak period</div><div class="card-value" id="anPeakName">No data</div><div class="card-sub" id="anPeakSub"></div></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Sales trend</h2>
+            <div class="segmented" id="trendFilter" role="group" aria-label="Trend period">
+              <button class="active" data-mode="daily">Daily</button>
+              <button data-mode="weekly">Weekly</button>
+              <button data-mode="monthly">Monthly</button>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="anLineChart"></canvas></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h2>Best-selling products</h2>
+            <div class="chart-box"><canvas id="anBestChart"></canvas></div>
+            <div class="table-wrap short">
+              <table>
+                <thead><tr><th>Rank</th><th>Product</th><th class="num">Units sold</th><th class="num">Sales</th></tr></thead>
+                <tbody id="bestBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel">
+            <h2>Sales by category</h2>
+            <div class="chart-box"><canvas id="anCatChart"></canvas></div>
+            <div class="table-wrap short">
+              <table>
+                <thead><tr><th>Category</th><th class="num">Units sold</th><th class="num">Sales</th></tr></thead>
+                <tbody id="catBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Customer traffic by time of day</h2>
+          <div class="grid-2 inner">
+            <div class="chart-box"><canvas id="anTrafficChart"></canvas></div>
+            <div class="table-wrap short">
+              <table>
+                <thead><tr><th>Period</th><th>Hours</th><th class="num">Transactions</th><th class="num">Share</th></tr></thead>
+                <tbody id="trafficBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h2>Sales transactions</h2><button class="btn primary" id="btnNewSale">New sale</button></div>
+          <div class="toolbar">
+            <input type="search" id="txnSearch" placeholder="Search transaction ID or product">
+            <label class="inline-field">Date <input type="date" id="txnDate"></label>
+            <button class="btn ghost small" id="txnClear">Clear filters</button>
+          </div>
+          <p class="muted count-line" id="txnCount"></p>
+          <div class="table-wrap tall">
+            <table>
+              <thead><tr>
+                <th>Transaction ID</th><th>Date and time</th><th>Items</th><th class="num">Units</th><th class="num">Total</th><th>Status</th>
+              </tr></thead>
+              <tbody id="txnBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../js/storage.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/sales-analytics.js"></script>
+</body>
+</html>
