@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="../assets/images/casia-logo.png">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/store-information.css">
+    <title>Store Information | CASIA Canteen</title>
+</head>
+<body data-page="store-information" data-title="Store Information">
+
+    <div class="app">
+
+        <!-- SIDE NAVIGATION (built by ../js/shell.js) -->
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="backdrop" id="backdrop"></div>
+
+        <div class="main">
+            <header class="topbar">
+                <button class="menu-btn" id="menuBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+                <span class="topbar-title" id="topbarTitle"></span>
+                <span class="topbar-user" id="topbarUser"></span>
+            </header>
+
+            <main class="page">
+                <nav class="crumbs" id="crumbs"></nav>
+                <div id="content"></div>
+            </main>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Load order matters: data.js, then shell.js, then this page's script -->
+    <script src="../js/data.js"></script>
+    <script src="../js/shell.js"></script>
+    <script src="../js/store-information.js"></script>
+</body>
+</html>

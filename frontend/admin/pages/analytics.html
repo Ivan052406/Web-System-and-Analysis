@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASIA | Reports & Visualizations</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/analytics.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <main class="analytics-page">
+
+        <header class="analytics-header">
+            <div>
+                <span class="eyebrow">CASIA REPORTING</span>
+                <h1>Reports &amp; Visualizations</h1>
+                <p>Branch-aware sales, product, stock, and customer-traffic reports for the selected period.</p>
+            </div>
+
+            <div class="header-actions">
+                <select id="analyticsPeriod" aria-label="Analytics period">
+                    <option value="7">Last 7 days</option>
+                    <option value="30" selected>Last 30 days</option>
+                    <option value="90">Last 90 days</option>
+                    <option value="365">Last 12 months</option>
+                </select>
+
+                <button type="button" class="btn btn-outline" id="refreshAnalytics">
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh
+                </button>
+            </div>
+        </header>
+
+        <div id="analyticsMessage"
+             class="analytics-message"
+             role="status"
+             aria-live="polite"></div>
+
+        <section class="analytics-kpis">
+
+            <article class="analytics-kpi">
+                <div class="kpi-icon brown">
+                    <i class="fa-solid fa-peso-sign"></i>
+                </div>
+                <div>
+                    <span>Total Sales</span>
+                    <h2 id="totalSales">₱0.00</h2>
+                </div>
+            </article>
+
+            <article class="analytics-kpi">
+                <div class="kpi-icon green">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
+                <div>
+                    <span>Transactions</span>
+                    <h2 id="transactionCount">0</h2>
+                </div>
+            </article>
+
+            <article class="analytics-kpi">
+                <div class="kpi-icon gold">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+                <div>
+                    <span>Items Sold</span>
+                    <h2 id="itemsSold">0</h2>
+                </div>
+            </article>
+
+            <article class="analytics-kpi">
+                <div class="kpi-icon blue">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <div>
+                    <span>Average Transaction</span>
+                    <h2 id="averageTransaction">₱0.00</h2>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Sales trend -->
+
+        <section class="analytics-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <h2>Sales Trend</h2>
+                    <p>Daily sales performance for the selected period</p>
+                </div>
+            </div>
+
+            <div class="chart-area sales-trend-area">
+                <canvas id="salesTrendChart"></canvas>
+            </div>
+
+        </section>
+
+        <!-- Product and category charts -->
+
+        <section class="analytics-grid">
+
+            <article class="analytics-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Best-Selling Products</h2>
+                        <p>Products ranked by units sold</p>
+                    </div>
+                </div>
+
+                <div class="chart-area">
+                    <canvas id="bestSellingChart"></canvas>
+                </div>
+            </article>
+
+            <article class="analytics-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Sales by Category</h2>
+                        <p>Revenue contribution of each category</p>
+                    </div>
+                </div>
+
+                <div class="chart-area doughnut-area">
+                    <canvas id="categorySalesChart"></canvas>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Customer traffic -->
+
+        <section class="analytics-grid traffic-grid">
+
+            <article class="analytics-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Customer Traffic by Time Period</h2>
+                        <p>Transaction distribution throughout the day</p>
+                    </div>
+                </div>
+
+                <div class="chart-area doughnut-area">
+                    <canvas id="customerTrafficChart"></canvas>
+                </div>
+            </article>
+
+            <article class="analytics-panel peak-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h2>Peak Customer Period</h2>
+                        <p>The busiest transaction period</p>
+                    </div>
+                </div>
+
+                <div class="peak-content">
+                    <div class="peak-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+
+                    <span class="peak-label">BUSIEST PERIOD</span>
+
+                    <h2 id="peakPeriod">No Data Yet</h2>
+
+                    <p id="peakDescription">
+                        Completed transactions will determine the busiest period.
+                    </p>
+                </div>
+
+                <div class="peak-stat">
+                    <div>
+                        <span>Transactions</span>
+                        <strong id="peakTransactions">0</strong>
+                    </div>
+
+                    <div>
+                        <span>Traffic Share</span>
+                        <strong id="peakPercentage">0%</strong>
+                    </div>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- Inventory visualization moved from the Main Dashboard -->
+        <section class="analytics-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Inventory by Product</h2>
+                    <p>Available units in the selected branch, or combined stock when All Branches is selected.</p>
+                </div>
+            </div>
+            <div class="chart-area sales-trend-area">
+                <canvas id="inventoryByProductChart"></canvas>
+            </div>
+        </section>
+
+        <section class="analytics-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Branch Performance</h2>
+                    <p>Sales and transaction contribution for the selected period.</p>
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Branch</th><th>Total Sales</th><th>Transactions</th><th>Items Sold</th></tr></thead>
+                    <tbody id="branchPerformanceBody"><tr><td colspan="4" class="table-empty">Loading branch performance...</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+
+                <!-- Best-selling product details -->
+
+        <section class="analytics-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <h2>Product Sales Performance</h2>
+                    <p>Detailed ranking of products based on quantity sold and revenue</p>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Product</th>
+                            <th>Items Sold</th>
+                            <th>Total Revenue</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="productPerformanceBody">
+                        <tr>
+                            <td colspan="4" class="table-empty">
+                                Loading product performance...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="../js/admin-layout.js"></script>
+    <script src="../js/analytics.js"></script>
+
+</body>
+</html>

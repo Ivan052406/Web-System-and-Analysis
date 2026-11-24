@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASIA | Demand & Restock Insights</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/insights.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <main class="insights-page">
+
+        <header class="insights-header">
+            <div>
+                <span class="eyebrow">CASIA BUSINESS INTELLIGENCE</span>
+                <h1>Demand & Restock Insights</h1>
+                <p>
+                    Analyze product demand, monitor stock coverage,
+                    and identify products that need replenishment.
+                </p>
+            </div>
+
+            <div class="header-actions">
+                <a href="restocking.html"
+                   class="btn btn-primary">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                    Go to Restocking
+                </a>
+
+                <button type="button"
+                        class="btn btn-outline"
+                        id="refreshInsights">
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh
+                </button>
+            </div>
+        </header>
+
+        <div id="insightsMessage"
+             class="insights-message"
+             role="status"
+             aria-live="polite"></div>
+
+        <!-- Analysis settings -->
+
+        <section class="insights-panel settings-panel">
+
+            <div class="settings-heading">
+                <div>
+                    <h2>Analysis Settings</h2>
+                    <p>
+                        Configure the period and stock planning
+                        assumptions used for the recommendations.
+                    </p>
+                </div>
+
+                <i class="fa-solid fa-sliders"></i>
+            </div>
+
+            <div class="settings-grid">
+
+                <div class="setting-field">
+                    <label for="analysisPeriod">
+                        Sales Analysis Period
+                    </label>
+
+                    <select id="analysisPeriod">
+                        <option value="7" selected>Last 7 days</option>
+                        <option value="14">Last 14 days</option>
+                        <option value="30">Last 30 days</option>
+                    </select>
+                </div>
+
+                <div class="setting-field">
+                    <label for="leadTime">
+                        Supplier Lead Time (Days)
+                    </label>
+
+                    <input type="number"
+                           id="leadTime"
+                           min="0"
+                           max="90"
+                           step="1"
+                           value="2">
+                </div>
+
+                <div class="setting-field">
+                    <label for="safetyDays">
+                        Safety Stock Coverage (Days)
+                    </label>
+
+                    <input type="number"
+                           id="safetyDays"
+                           min="0"
+                           max="30"
+                           step="1"
+                           value="1">
+                </div>
+
+                <div class="setting-field">
+                    <label for="targetDays">
+                        Target Stock Coverage (Days)
+                    </label>
+
+                    <input type="number"
+                           id="targetDays"
+                           min="1"
+                           max="90"
+                           step="1"
+                           value="7">
+                </div>
+
+                <div class="setting-action">
+                    <button type="button"
+                            class="btn btn-primary"
+                            id="applySettings">
+                        <i class="fa-solid fa-chart-line"></i>
+                        Apply Settings
+                    </button>
+                </div>
+
+            </div>
+
+            <p class="settings-note">
+                Restock quantities are calculated using expected demand
+                during lead time, safety coverage, and target stock coverage.
+            </p>
+
+        </section>
+
+        <!-- Overview cards -->
+
+        <section class="insight-kpis">
+
+            <article class="insight-kpi">
+                <div class="kpi-icon brown">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+
+                <div>
+                    <span>Total Units Sold</span>
+                    <h2 id="totalUnitsSold">0</h2>
+                    <small>Selected analysis period</small>
+                </div>
+            </article>
+
+            <article class="insight-kpi">
+                <div class="kpi-icon blue">
+                    <i class="fa-solid fa-chart-column"></i>
+                </div>
+
+                <div>
+                    <span>Average Daily Demand</span>
+                    <h2 id="averageDailyDemand">0</h2>
+                    <small>Units per day</small>
+                </div>
+            </article>
+
+            <article class="insight-kpi">
+                <div class="kpi-icon orange">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <div>
+                    <span>Products Needing Restock</span>
+                    <h2 id="productsNeedingRestock">0</h2>
+                    <small>Requires replenishment</small>
+                </div>
+            </article>
+
+            <article class="insight-kpi">
+                <div class="kpi-icon green">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+
+                <div>
+                    <span>Suggested Restock Units</span>
+                    <h2 id="suggestedRestockQuantity">0</h2>
+                    <small>Estimated replenishment</small>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Main demand line chart -->
+
+        <section class="insights-panel chart-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <h2>Demand Trend</h2>
+                    <p>
+                        Daily quantity of products sold during the
+                        selected analysis period.
+                    </p>
+                </div>
+
+                <span class="chart-tag">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Daily Units Sold
+                </span>
+            </div>
+
+            <div class="chart-container demand-chart">
+                <canvas id="demandTrendChart"></canvas>
+            </div>
+
+        </section>
+
+        <!-- Current stock vs demand -->
+
+        <section class="insights-panel chart-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <h2>Current Stock vs Daily Demand</h2>
+                    <p>
+                        Compare available inventory with the average
+                        number of units sold per day.
+                    </p>
+                </div>
+
+                <span class="chart-tag">
+                    <i class="fa-solid fa-chart-column"></i>
+                    Units
+                </span>
+            </div>
+
+            <div class="chart-container stock-demand-chart">
+                <canvas id="stockDemandChart"></canvas>
+            </div>
+
+        </section>
+
+        <!-- Restock recommendations -->
+
+        <section class="insights-panel recommendations-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <h2>Product Demand & Restock Recommendations</h2>
+
+                    <p>
+                        Product-level demand calculations and
+                        recommended replenishment quantities.
+                    </p>
+                </div>
+            </div>
+
+            <div class="recommendation-summary">
+
+                <div class="summary-item">
+                    <span class="summary-dot out-dot"></span>
+                    <span>Out of Stock</span>
+                    <strong id="outOfStockCount">0</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span class="summary-dot now-dot"></span>
+                    <span>Restock Now</span>
+                    <strong id="restockNowCount">0</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span class="summary-dot soon-dot"></span>
+                    <span>Restock Soon</span>
+                    <strong id="restockSoonCount">0</strong>
+                </div>
+
+                <div class="summary-item">
+                    <span class="summary-dot ok-dot"></span>
+                    <span>Sufficient Stock</span>
+                    <strong id="sufficientStockCount">0</strong>
+                </div>
+
+            </div>
+
+            <div class="recommendation-toolbar">
+
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="search"
+                           id="productSearch"
+                           placeholder="Search product...">
+                </div>
+
+                <select id="recommendationFilter">
+                    <option value="all">All Products</option>
+                    <option value="out">Out of Stock</option>
+                    <option value="now">Restock Now</option>
+                    <option value="soon">Restock Soon</option>
+                    <option value="ok">Sufficient Stock</option>
+                    <option value="no_data">No Sales Data</option>
+                </select>
+
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Current Stock</th>
+                            <th>Units Sold</th>
+                            <th>Average Daily Demand</th>
+                            <th>Demand Trend</th>
+                            <th>Days of Stock Remaining</th>
+                            <th>Suggested Restock</th>
+                            <th>Recommendation</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="recommendationTableBody">
+                        <tr>
+                            <td colspan="8" class="table-empty">
+                                Loading demand insights...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="table-footer">
+                <span id="productResultCount">0 products</span>
+
+                <span>
+                    Recommendations are estimates based on recorded sales
+                    and current inventory.
+                </span>
+            </div>
+
+        </section>
+
+        <!-- Explanation of calculations -->
+
+        <section class="insights-panel calculation-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <h2>How Recommendations Are Calculated</h2>
+                    <p>Understand the calculations behind the insights.</p>
+                </div>
+            </div>
+
+            <div class="calculation-grid">
+
+                <article class="calculation-item">
+                    <div class="calculation-number">01</div>
+                    <div>
+                        <h3>Average Daily Demand</h3>
+                        <p>
+                            Total units sold divided by the number
+                            of days in the selected analysis period.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="calculation-item">
+                    <div class="calculation-number">02</div>
+                    <div>
+                        <h3>Demand Trend</h3>
+                        <p>
+                            Compares average demand in the selected
+                            period with the immediately preceding
+                            period of equal length.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="calculation-item">
+                    <div class="calculation-number">03</div>
+                    <div>
+                        <h3>Stock Coverage</h3>
+                        <p>
+                            Current stock divided by average daily demand
+                            estimates how many days inventory may last.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="calculation-item">
+                    <div class="calculation-number">04</div>
+                    <div>
+                        <h3>Suggested Restock Quantity</h3>
+                        <p>
+                            Estimates the quantity needed to cover
+                            lead time, safety days, and target stock days.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="../js/admin-layout.js"></script>
+    <script src="../js/insights.js"></script>
+
+</body>
+</html>

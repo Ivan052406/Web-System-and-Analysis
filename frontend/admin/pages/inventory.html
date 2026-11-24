@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASIA | Inventory Management</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/inventory.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <main class="inventory-page">
+
+        <header class="inventory-header">
+            <div>
+                <span class="eyebrow">CASIA MANAGEMENT</span>
+                <h1>Inventory Management</h1>
+                <p>Monitor product quantities and manage stock movements.</p>
+            </div>
+
+            <button type="button"
+                    class="btn btn-outline"
+                    id="refreshInventory">
+                <i class="fa-solid fa-rotate"></i>
+                Refresh
+            </button>
+        </header>
+
+        <div id="inventoryMessage"
+             class="inventory-message"
+             role="status"
+             aria-live="polite"></div>
+
+        <section class="inventory-kpis">
+
+            <article class="kpi-card">
+                <div class="kpi-icon neutral">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <div>
+                    <span>Total Products</span>
+                    <h2 id="totalProducts">0</h2>
+                </div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon available">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                    <span>Available</span>
+                    <h2 id="availableProducts">0</h2>
+                </div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon low">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                    <span>Low Stock</span>
+                    <h2 id="lowStockProducts">0</h2>
+                </div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon out">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+                <div>
+                    <span>Out of Stock</span>
+                    <h2 id="outOfStockProducts">0</h2>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="inventory-charts">
+
+            <article class="inventory-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Current Stock per Product</h2>
+                        <p>Recorded available quantity of each product</p>
+                    </div>
+                </div>
+
+                <div class="chart-area">
+                    <canvas id="stockChart"></canvas>
+                </div>
+            </article>
+
+            <article class="inventory-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Inventory Status</h2>
+                        <p>Distribution of products by stock level</p>
+                    </div>
+                </div>
+
+                <div class="chart-area doughnut-area">
+                    <canvas id="inventoryStatusChart"></canvas>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="inventory-panel">
+
+            <div class="panel-heading inventory-list-heading">
+                <div>
+                    <h2>Current Inventory</h2>
+                    <p>Manage stock quantities and minimum stock levels</p>
+                </div>
+
+                <div class="inventory-actions">
+                    <button type="button"
+                            class="btn btn-primary"
+                            id="openStockIn">
+                        <i class="fa-solid fa-plus"></i>
+                        Stock-In
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-outline"
+                            id="openAdjustment">
+                        <i class="fa-solid fa-sliders"></i>
+                        Adjust Stock
+                    </button>
+                </div>
+            </div>
+
+            <div class="inventory-toolbar">
+
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input type="search"
+                           id="inventorySearch"
+                           placeholder="Search product...">
+                </div>
+
+                <select id="stockFilter">
+                    <option value="all">All Stock Status</option>
+                    <option value="available">Available</option>
+                    <option value="low">Low Stock</option>
+                    <option value="out">Out of Stock</option>
+                </select>
+
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Current Stock</th>
+                            <th>Minimum Stock</th>
+                            <th>Status</th>
+                            <th>Last Updated</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="inventoryTableBody">
+                        <tr>
+                            <td colspan="7" class="table-empty">
+                                Loading inventory...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <section class="inventory-panel history-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <h2>Inventory History</h2>
+                    <p>Recent stock movements and adjustments</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date and Time</th>
+                            <th>Product</th>
+                            <th>Change Type</th>
+                            <th>Previous Stock</th>
+                            <th>New Stock</th>
+                            <th>Change</th>
+                            <th>Performed By</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="historyTableBody">
+                        <tr>
+                            <td colspan="8" class="table-empty">
+                                Loading history...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Stock-in dialog -->
+
+    <div class="inventory-modal" id="stockInModal">
+        <div class="modal-card">
+
+            <div class="modal-heading">
+                <div>
+                    <h2>Manual Stock-In</h2>
+                    <p>Add additional quantities to an existing product.</p>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-close="stockInModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="stockInForm">
+
+                <label for="stockInProduct">Product</label>
+                <select id="stockInProduct" required>
+                    <option value="">Select product</option>
+                </select>
+
+                <label for="stockInQuantity">Quantity to Add</label>
+                <input type="number"
+                       id="stockInQuantity"
+                       min="1"
+                       step="1"
+                       required>
+
+                <label for="stockInReason">Reason</label>
+                <textarea id="stockInReason"
+                          rows="3"
+                          placeholder="Enter reason for stock-in..."
+                          required></textarea>
+
+                <div class="modal-actions">
+                    <button type="button"
+                            class="btn btn-outline"
+                            data-close="stockInModal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary"
+                            id="submitStockIn">
+                        Save Stock-In
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Stock adjustment dialog -->
+
+    <div class="inventory-modal" id="adjustmentModal">
+        <div class="modal-card">
+
+            <div class="modal-heading">
+                <div>
+                    <h2>Stock Adjustment</h2>
+                    <p>Record the actual physical stock count.</p>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-close="adjustmentModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="adjustmentForm">
+
+                <label for="adjustProduct">Product</label>
+                <select id="adjustProduct" required>
+                    <option value="">Select product</option>
+                </select>
+
+                <label for="countedStock">Actual Counted Stock</label>
+                <input type="number"
+                       id="countedStock"
+                       min="0"
+                       step="1"
+                       required>
+
+                <label for="adjustmentReason">Reason for Adjustment</label>
+                <textarea id="adjustmentReason"
+                          rows="3"
+                          placeholder="Explain why the stock count differs..."
+                          required></textarea>
+
+                <div class="modal-actions">
+                    <button type="button"
+                            class="btn btn-outline"
+                            data-close="adjustmentModal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary"
+                            id="submitAdjustment">
+                        Save Adjustment
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Minimum stock dialog -->
+
+    <div class="inventory-modal" id="minimumStockModal">
+        <div class="modal-card">
+
+            <div class="modal-heading">
+                <div>
+                    <h2>Set Minimum Stock</h2>
+                    <p>Configure the low-stock warning threshold.</p>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-close="minimumStockModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="minimumStockForm">
+
+                <input type="hidden" id="minimumStockProductId">
+
+                <label for="minimumStockValue">
+                    Minimum Stock Quantity
+                </label>
+
+                <input type="number"
+                       id="minimumStockValue"
+                       min="0"
+                       step="1"
+                       required>
+
+                <div class="modal-actions">
+                    <button type="button"
+                            class="btn btn-outline"
+                            data-close="minimumStockModal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Save Minimum Stock
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script src="../js/admin-layout.js"></script>
+    <script src="../js/inventory.js"></script>
+
+</body>
+</html>

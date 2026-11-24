@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales & Products</title>
+
+    <link rel="stylesheet" href="../css/sales.css">
+
+        <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <main id="salesProductInterface" class="page-content sales-page">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">CANTEEN MANAGEMENT</p>
+                <h1>Product Management</h1>
+                <p class="subtitle">Add products to your business catalogue or remove products that are no longer used. Staff handle checkout.</p>
+            </div>
+            <button id="showAddProduct" class="primary-button" type="button">+ Add Product</button>
+        </header>
+
+        <section class="sales-layout">
+            <div class="panel product-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Product List</h2>
+                        <p class="muted">Products shared by your business branches.</p>
+                    </div>
+                    <span id="productCount" class="count-badge">0 products</span>
+                    </div>
+
+                <input
+                    id="productSearch"
+                    class="search-input"
+                    type="search"
+                    placeholder="Search products..."
+                    aria-label="Search products"
+                >
+
+                <div id="categoryFilters" class="category-filters">
+                    <button class="category-button active" data-category="all" type="button">All</button>
+                </div>
+
+                <div id="productList" class="product-grid">
+                    <p class="muted">Loading products...</p>
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+    <!-- Add Product Popup -->
+    <div id="addProductPopup" class="modal-backdrop" style="display:none;">
+        <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="addProductTitle">
+            <div class="modal-heading">
+                <div>
+                    <h2 id="addProductTitle">Add New Product</h2>
+                    <p class="muted">Enter the product details below.</p>
+                </div>
+                <button id="closeAddProduct" class="close-button" type="button" aria-label="Close">×</button>
+            </div>
+
+            <form id="addProductForm">
+                <label for="category">Category</label>
+                <select id="category" name="category_id" required>
+                    <option value="">Loading categories...</option>
+                </select>
+
+                <label for="productName">Product Name</label>
+                <input type="text" id="productName" maxlength="100"
+                       placeholder="example:Chicken Sandwich" required>
+
+                <label for="productPrice">Price (₱)</label>
+                <input type="number" id="productPrice" min="0"
+                       step="0.01" placeholder="0.00" required>
+                <p class="muted">New products are added to every active branch with zero stock. Record branch stock in the Restocking page.</p>
+
+                <div class="modal-actions">
+                    <button id="cancelAddProduct" class="secondary-button"
+                            type="button">Cancel</button>
+                    <button class="primary-button" type="submit">
+                        Save Product
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script src="../js/admin-layout.js"></script>
+    <script src="../js/sales.js"></script>
+</body>
+</html>

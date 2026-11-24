@@ -1,0 +1,78 @@
+/* ==========================================================================
+   search-store.css — Search Store page only
+   ========================================================================== */
+
+.search-hero{ max-width: 640px; margin: 0 auto 22px; }
+
+/*THIS IS FOR THE BIG SEARCH BOX*/
+.search-box{ position: relative; }
+
+.search-box > i{
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8c7d74;
+    pointer-events: none;
+}
+
+.search-box .input{
+    padding: 16px 46px 16px 50px;
+    border-radius: 999px;
+    background-color: #fff;
+    font-size: 14px;
+    box-shadow: var(--shadow-soft);
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.search-box .input::-webkit-search-cancel-button{ display: none; }
+
+.clear{
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--field);
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+.clear:hover{ background-color: #e4d9d0; }
+
+/*THIS IS FOR THE SUGGESTIONS UNDER THE BOX*/
+.suggest{
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 50;
+    list-style: none;
+    overflow: hidden;
+    border-radius: 18px;
+    background-color: #fff;
+    box-shadow: var(--shadow);
+}
+
+.suggest li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 20px;
+    font-size: 13px;
+    cursor: pointer;
+}
+.suggest li em{ font-size: 11px; font-style: normal; color: var(--muted); }
+.suggest li:hover, .suggest li.active{ background-color: var(--cream); }
+
+/*THIS IS FOR THE RECENT SEARCHES*/
+.recent{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 14px; }
+
+/*THIS IS FOR THE "Sells ..." LINE ON A RESULT*/
+.sells{ color: var(--brown-dark); }
+.sells i{ margin-right: 4px; color: var(--tan); }

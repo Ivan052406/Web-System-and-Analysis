@@ -1,0 +1,884 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+/* =========================================================
+   CASIA COMBINED LOGIN STYLESHEET
+   User Login + Admin Login
+   ========================================================= */
+
+:root {
+    --brown: #704214;
+    --brown-dark: #4b2e16;
+    --brown-light: #a87535;
+    --gold: #d6a34a;
+    --cream: #fff8ec;
+    --white: #ffffff;
+    --text: #333333;
+    --muted: #777777;
+    --border: #ded5c8;
+    --error: #c0392b;
+    --success: #27834a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, rgba(255,248,236,.98), rgba(239,222,195,.96));
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.page-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* HEADER */
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    color: var(--brown-dark);
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: .4px;
+    text-align: center;
+}
+
+.header-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+/* USER / BUSINESS OWNER / STAFF SELECTOR */
+
+.role-switch {
+    display: flex;
+    gap: 8px;
+    padding: 6px;
+    margin-bottom: 22px;
+    background: rgba(255,255,255,.85);
+    border: 1px solid rgba(112,66,20,.15);
+    border-radius: 50px;
+    box-shadow: 0 5px 18px rgba(67,43,19,.08);
+}
+
+.role-button {
+    border: none;
+    border-radius: 40px;
+    padding: 12px 24px;
+    color: var(--brown-dark);
+    background: transparent;
+    font-size: 13px;
+    font-weight: 700;
+    transition: .25s ease;
+}
+
+.role-button i {
+    margin-right: 7px;
+}
+
+.role-button:hover {
+    background: #f5ead8;
+}
+
+.role-button.selected {
+    color: var(--white);
+    background: var(--brown);
+    box-shadow: 0 4px 12px rgba(74,42,14,.2);
+}
+
+/* VIEW SWITCHING */
+
+.auth-view {
+    display: none;
+    width: 100%;
+    max-width: 940px;
+}
+
+.auth-view.active {
+    display: block;
+}
+
+
+/* Combined Admin / Staff entry. The top-level selector remains User vs Admin / Staff;
+   this smaller switch chooses the credential flow inside the shared management login. */
+.admin-auth-heading {
+    width: 100%;
+    margin: 0 auto 16px;
+    text-align: center;
+}
+.admin-auth-heading h1 {
+    color: var(--brown-dark);
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+.admin-auth-heading p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 12px;
+}
+.admin-staff-switch {
+    width: min(100%, 290px);
+    margin: 0 auto;
+    padding: 4px;
+    display: flex;
+    gap: 4px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255,255,255,.78);
+}
+.admin-staff-mode-button {
+    flex: 1;
+    min-height: 36px;
+    padding: 8px 15px;
+    border: 0;
+    border-radius: 999px;
+    color: var(--brown-dark);
+    background: transparent;
+    font-size: 11px;
+    font-weight: 800;
+    transition: .2s ease;
+}
+.admin-staff-mode-button i { margin-right: 6px; }
+.admin-staff-mode-button.selected {
+    color: var(--white);
+    background: var(--brown);
+    box-shadow: 0 3px 9px rgba(74,42,14,.18);
+}
+.admin-staff-mode[hidden] { display: none !important; }
+.admin-staff-mode.active { display: block; }
+#staffModeView { width: 100%; }
+#staffModeView .staff-auth-card { margin: 0 auto; }
+
+/* MAIN AUTH CONTAINER */
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 940px;
+    min-height: 610px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 18px 55px rgba(67,43,19,.2);
+}
+
+/* FORM CONTAINERS */
+
+.form-container {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    padding: 35px 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--white);
+    transition: all .6s ease-in-out;
+}
+
+.form-container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container h1 {
+    margin-bottom: 10px;
+    color: var(--brown-dark);
+    font-size: 27px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.form-container > form > span {
+    margin-bottom: 18px;
+    color: var(--muted);
+    font-size: 11px;
+    text-align: center;
+}
+
+/* SIGN IN SIDE */
+
+.sign-in {
+    left: 0;
+    z-index: 2;
+}
+
+.container.active .sign-in {
+    transform: translateX(100%);
+}
+
+/* SIGN UP SIDE */
+
+.sign-up {
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+.container.active .sign-up {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: showForm .6s;
+}
+
+@keyframes showForm {
+    0%, 49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+
+    50%, 100% {
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+/* INPUT FIELDS */
+
+.form-container input,
+.form-container select {
+    width: 100%;
+    height: 43px;
+    margin: 7px 0;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+    background: #fbfaf8;
+    color: var(--text);
+    font-size: 12px;
+    transition: .2s ease;
+}
+
+.form-container input:focus,
+.form-container select:focus {
+    border-color: var(--brown-light);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(168,117,53,.12);
+}
+
+.form-container input::placeholder {
+    color: #99918a;
+}
+
+/* PASSWORD FIELD */
+
+.password-input {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.password-input input {
+    padding-right: 42px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8a7967;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.toggle-password:hover {
+    color: var(--brown);
+}
+
+/* REMEMBER ACCOUNT */
+
+.remember-account {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 9px 0 12px;
+    color: #666;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.remember-account input {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    accent-color: var(--brown);
+}
+
+.separator {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 9px 0;
+    color: #999;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.separator::before,
+.separator::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #e8e1d8;
+}
+
+/* BUTTONS */
+
+.primary-button {
+    width: 100%;
+    min-height: 43px;
+    margin-top: 12px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 30px;
+    color: var(--white);
+    background: var(--brown);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    box-shadow: 0 5px 13px rgba(112,66,20,.2);
+    transition: .25s ease;
+}
+
+.primary-button:hover {
+    background: var(--brown-dark);
+    transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.outline-button {
+    min-width: 135px;
+    padding: 11px 25px;
+    border: 1px solid var(--white);
+    border-radius: 30px;
+    color: var(--white);
+    background: transparent;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    transition: .25s ease;
+}
+
+.outline-button:hover {
+    color: var(--brown);
+    background: var(--white);
+}
+
+/* SWITCH TEXT */
+
+.switch-text {
+    margin-top: 18px;
+    color: #777;
+    font-size: 10px;
+    text-align: center;
+}
+
+.switch-text a {
+    margin-left: 3px;
+    color: var(--brown);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.switch-text a:hover {
+    text-decoration: underline;
+}
+
+/* SLIDING PANELS */
+
+.toggle-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 140px 0 0 100px;
+    z-index: 10;
+    transition: all .6s ease-in-out;
+}
+
+.container.active .toggle-container {
+    transform: translateX(-100%);
+    border-radius: 0 140px 100px 0;
+}
+
+.toggle {
+    position: relative;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    color: var(--white);
+    background: linear-gradient(
+        135deg,
+        var(--brown-dark),
+        var(--brown),
+        var(--brown-light)
+    );
+    transform: translateX(0);
+    transition: all .6s ease-in-out;
+}
+
+.container.active .toggle {
+    transform: translateX(50%);
+}
+
+.toggle-panel {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all .6s ease-in-out;
+}
+
+.toggle-panel h1 {
+    margin-bottom: 13px;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.toggle-panel p {
+    max-width: 280px;
+    margin-bottom: 25px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: rgba(255,255,255,.85);
+}
+
+.toggle-left {
+    left: 0;
+    transform: translateX(-200%);
+}
+
+.container.active .toggle-left {
+    transform: translateX(0);
+}
+
+.toggle-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.container.active .toggle-right {
+    transform: translateX(200%);
+}
+
+.brand-logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 23px;
+    object-fit: contain;
+    padding: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.95);
+}
+
+/* ADMIN FORM ROWS */
+
+.form-row {
+    width: 100%;
+    display: flex;
+    gap: 9px;
+}
+
+.form-row > * {
+    flex: 1;
+    min-width: 0;
+}
+
+.form-row .password-input {
+    min-width: 0;
+}
+
+.icon-input {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.icon-input .field-icon {
+    position: absolute;
+    left: 14px;
+    color: #987b5a;
+    font-size: 13px;
+    z-index: 1;
+}
+
+.icon-input input {
+    padding-left: 38px;
+}
+
+/* FORM MESSAGES */
+
+.form-message {
+    width: 100%;
+    min-height: 0;
+    margin: 4px 0;
+    color: var(--error);
+    font-size: 10px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.form-message:empty {
+    display: none;
+}
+
+.form-message.success {
+    color: var(--success);
+}
+
+
+/* STAFF SIGN-IN CARD: staff have no self-registration flow. */
+.staff-auth-card {
+    width: min(100%, 520px);
+    min-height: 430px;
+    margin: 0 auto;
+    padding: 42px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border: 1px solid rgba(112,66,20,.10);
+    border-radius: 24px;
+    box-shadow: 0 18px 55px rgba(67,43,19,.18);
+}
+
+.staff-auth-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.staff-auth-form h1 {
+    margin: 10px 0;
+    color: var(--brown-dark);
+    font-size: 27px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.staff-auth-form > span {
+    margin-bottom: 18px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.staff-auth-form > label:not(.remember-account) {
+    margin-top: 9px;
+    color: var(--brown-dark);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.staff-auth-form > input,
+.staff-auth-form .password-input input {
+    width: 100%;
+    height: 44px;
+    margin: 7px 0;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+    background: #fbfaf8;
+    color: var(--text);
+    font-size: 12px;
+}
+
+.staff-auth-form > input:focus,
+.staff-auth-form .password-input input:focus {
+    border-color: var(--brown-light);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(168,117,53,.12);
+}
+
+.staff-auth-icon {
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 8px;
+    display: grid;
+    place-items: center;
+    color: var(--white);
+    background: var(--brown);
+    border-radius: 50%;
+    font-size: 21px;
+}
+
+.staff-auth-form .primary-button {
+    width: 100%;
+    margin-top: 13px;
+}
+
+@media (max-width: 700px) {
+    .role-switch { gap: 3px; }
+    .role-button { padding: 11px 6px; font-size: 10px; }
+    .role-button i { margin-right: 3px; }
+    .staff-auth-card { min-height: 400px; padding: 32px 24px; border-radius: 18px; }
+    .admin-auth-heading { margin-bottom: 12px; }
+    .admin-auth-heading h1 { font-size: 19px; }
+    .admin-staff-switch { max-width: 250px; }
+}
+
+/* FOOTER */
+
+.page-footer {
+    margin-top: 22px;
+    color: #806e5b;
+    font-size: 10px;
+    text-align: center;
+}
+
+/* ACCESSIBILITY */
+
+button:focus-visible,
+a:focus-visible,
+.toggle-password:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
+/* RESPONSIVE LAYOUT */
+
+@media (max-width: 900px) {
+    .container {
+        min-height: 590px;
+    }
+
+    .form-container {
+        padding: 28px 25px;
+    }
+
+    .form-container h1 {
+        font-size: 23px;
+    }
+
+    .toggle-panel {
+        padding: 22px;
+    }
+
+    .toggle-panel h1 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 700px) {
+    .page-wrapper {
+        justify-content: flex-start;
+        padding: 22px 12px;
+    }
+
+    .page-header {
+        margin-bottom: 17px;
+        font-size: 13px;
+    }
+
+    .header-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .role-switch {
+        width: 100%;
+        max-width: 380px;
+    }
+
+    .role-button {
+        flex: 1;
+        padding: 12px 8px;
+        font-size: 11px;
+    }
+
+    .auth-view {
+        max-width: 460px;
+    }
+
+    .container {
+        min-height: 660px;
+        border-radius: 18px;
+    }
+
+    .toggle-container {
+        display: none;
+    }
+
+    .form-container {
+        width: 100%;
+        padding: 35px 28px;
+    }
+
+    .sign-in {
+        left: 0;
+    }
+
+    .container.active .sign-in {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    .sign-up {
+        left: -100%;
+        opacity: 0;
+    }
+
+    .container.active .sign-up {
+        left: 0;
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .form-container h1 {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 420px) {
+    .page-wrapper {
+        padding: 15px 9px;
+    }
+
+    .container {
+        min-height: 640px;
+    }
+
+    .form-container {
+        padding: 28px 20px;
+    }
+
+    .form-container h1 {
+        font-size: 23px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-container input,
+    .form-container select {
+        height: 41px;
+        font-size: 11px;
+    }
+
+    .switch-text {
+        font-size: 9px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+/* Shared staff branch-picker controls inside the combined Admin / Staff panel. */
+.secondary-button {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 12px;
+    padding: 10px 16px;
+    border: 1px solid var(--brown);
+    border-radius: 24px;
+    color: var(--brown);
+    background: #fffaf2;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .25px;
+    transition: .2s ease;
+}
+.secondary-button:hover {
+    color: #fff;
+    background: var(--brown);
+}
+.secondary-button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+#staffBranchPicker {
+    width: 100%;
+    margin-top: 12px;
+    display: grid;
+    gap: 7px;
+}
+#staffBranchPicker[hidden] { display: none !important; }
+#staffBranchPicker label {
+    color: var(--brown-dark);
+    font-size: 11px;
+    font-weight: 700;
+}
+#staffBranchPicker select {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    background: #fbfaf8;
+    font-size: 12px;
+}
+#staffBranchPicker select:focus {
+    outline: none;
+    border-color: var(--brown-light);
+    box-shadow: 0 0 0 3px rgba(168,117,53,.12);
+}

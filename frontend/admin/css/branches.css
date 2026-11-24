@@ -1,0 +1,27 @@
+.branches-page { max-width: 1600px; }
+.branches-page h1 { margin: 0; color: #4e342e; font-size: clamp(25px,3vw,34px); }
+.branch-grid { display:grid; grid-template-columns:minmax(280px,.8fr) minmax(400px,1.5fr); gap:20px; align-items:start; }
+.branch-panel { background:#fff; border:1px solid #e9e1d8; border-radius:14px; padding:22px; box-shadow:0 4px 15px rgba(40,25,10,.04); min-width:0; }
+.branch-panel h2 { margin:0 0 16px; color:#4e342e; font-size:19px; }
+.branch-panel form { display:grid; gap:10px; }
+.branch-panel label { color:#61482f; font-size:12px; font-weight:700; }
+.branch-panel label span { color:#8b8177; font-weight:400; }
+.branch-panel input,.branch-panel textarea { width:100%; border:1px solid #ddd2c6; border-radius:8px; padding:11px 12px; color:#392d24; font:13px Arial,sans-serif; resize:vertical; }
+.branch-primary { border:0; background:#754315; color:#fff; border-radius:8px; padding:12px 15px; font-weight:700; margin-top:6px; }
+.branch-primary:hover { background:#5d3511; }
+.branch-note { color:#7d7165; font-size:11px; line-height:1.6; margin:14px 0 0; }
+.branch-list-heading { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+.branch-list-heading p { margin:-7px 0 14px; color:#80766c; font-size:12px; }
+.branch-count { background:#f5ede5; border-radius:20px; padding:7px 10px; color:#754315; font-size:11px; font-weight:700; white-space:nowrap; }
+.branch-table-wrap { overflow:auto; }
+.branch-table-wrap table { width:100%; border-collapse:collapse; font-size:12px; }
+.branch-table-wrap th,.branch-table-wrap td { padding:12px 10px; border-bottom:1px solid #eee8e1; text-align:left; vertical-align:middle; }
+.branch-table-wrap th { color:#887665; font-size:10px; text-transform:uppercase; letter-spacing:.6px; }
+.branch-status { border-radius:20px; padding:5px 9px; background:#e7f5ec; color:#287447; font-weight:700; }
+.branch-status.inactive { background:#fbe9e7; color:#a23b33; }
+.branch-action { border:1px solid #d8c7b5; border-radius:7px; padding:7px 9px; background:#fff; color:#754315; font-size:11px; font-weight:700; }
+.branch-message { min-height:0; margin:0 0 14px; font-size:12px; }
+.branch-message.success,.branch-message.error { padding:10px 13px; border-radius:8px; }
+.branch-message.success { background:#eaf6ef; color:#176b45; }
+.branch-message.error { background:#fff0f0; color:#a12d2d; }
+@media(max-width:900px){.branch-grid{grid-template-columns:1fr}.branches-page{padding-left:18px;padding-right:18px}}

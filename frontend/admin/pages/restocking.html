@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASIA | Restocking Management</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/restocking.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <main class="restocking-page">
+
+        <header class="restocking-header">
+            <div>
+                <span class="eyebrow">CASIA MANAGEMENT</span>
+                <h1>Restocking Management</h1>
+                <p>Manage suppliers, record received products, and monitor restocking activity.</p>
+            </div>
+
+            <div class="header-actions">
+                <select id="restockPeriod" aria-label="Restocking report period">
+                    <option value="7">Last 7 days</option>
+                    <option value="30" selected>Last 30 days</option>
+                    <option value="90">Last 90 days</option>
+                    <option value="365">Last 12 months</option>
+                </select>
+
+                <button type="button" class="btn btn-outline" id="refreshRestocking">
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh
+                </button>
+            </div>
+        </header>
+
+        <div id="restockingMessage"
+             class="restocking-message"
+             role="status"
+             aria-live="polite"></div>
+
+        <section class="restock-kpis">
+
+            <article class="restock-kpi">
+                <div class="kpi-icon brown">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                </div>
+                <div>
+                    <span>Total Restocking Records</span>
+                    <h2 id="totalRestocks">0</h2>
+                </div>
+            </article>
+
+            <article class="restock-kpi">
+                <div class="kpi-icon green">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <div>
+                    <span>Total Units Received</span>
+                    <h2 id="totalUnits">0</h2>
+                </div>
+            </article>
+
+            <article class="restock-kpi">
+                <div class="kpi-icon gold">
+                    <i class="fa-solid fa-box"></i>
+                </div>
+                <div>
+                    <span>Products Restocked</span>
+                    <h2 id="productsRestocked">0</h2>
+                </div>
+            </article>
+
+            <article class="restock-kpi">
+                <div class="kpi-icon blue">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+                <div>
+                    <span>Suppliers Used</span>
+                    <h2 id="suppliersUsed">0</h2>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="restock-charts">
+
+            <article class="restock-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Quantity Restocked per Product</h2>
+                        <p>Top products by units received</p>
+                    </div>
+                </div>
+
+                <div class="chart-area">
+                    <canvas id="productRestockChart"></canvas>
+                </div>
+            </article>
+
+            <article class="restock-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Restocking Activity</h2>
+                        <p>Units received over time</p>
+                    </div>
+                </div>
+
+                <div class="chart-area">
+                    <canvas id="restockTrendChart"></canvas>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="restock-panel">
+
+            <div class="panel-heading section-heading">
+                <div>
+                    <h2>Supplier Management</h2>
+                    <p>Maintain your list of product suppliers</p>
+                </div>
+
+                <button type="button" class="btn btn-primary" id="addSupplierButton">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Supplier
+                </button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Supplier Name</th>
+                            <th>Contact Number</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="supplierTableBody">
+                        <tr>
+                            <td colspan="5" class="table-empty">Loading suppliers...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <section class="restock-panel">
+
+            <div class="panel-heading section-heading">
+                <div>
+                    <h2>Restocking Records</h2>
+                    <p>Record supplier deliveries and automatically increase inventory</p>
+                </div>
+
+                <button type="button" class="btn btn-primary" id="recordRestockButton">
+                    <i class="fa-solid fa-plus"></i>
+                    Record Restock
+                </button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Restock ID</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Product</th>
+                            <th>Supplier</th>
+                            <th>Quantity</th>
+                            <th>Received By</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="restockTableBody">
+                        <tr>
+                            <td colspan="7" class="table-empty">Loading restocking records...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Supplier form -->
+
+    <div class="restock-modal" id="supplierModal">
+        <div class="modal-card">
+
+            <div class="modal-heading">
+                <div>
+                    <h2 id="supplierModalTitle">Add Supplier</h2>
+                    <p>Enter supplier information.</p>
+                </div>
+
+                <button type="button" class="modal-close" data-close="supplierModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="supplierForm">
+
+                <input type="hidden" id="supplierId">
+
+                <label for="supplierName">Supplier Name</label>
+                <input type="text"
+                       id="supplierName"
+                       maxlength="100"
+                       required>
+
+                <label for="supplierContact">Contact Number</label>
+                <input type="text"
+                       id="supplierContact"
+                       maxlength="30"
+                       placeholder="Optional">
+
+                <label for="supplierAddress">Address</label>
+                <textarea id="supplierAddress"
+                          rows="3"
+                          maxlength="255"
+                          placeholder="Optional"></textarea>
+
+                <div id="supplierStatusField" class="hidden-field">
+                    <label for="supplierStatus">Supplier Status</label>
+                    <select id="supplierStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" data-close="supplierModal">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-primary" id="saveSupplierButton">
+                        Save Supplier
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Record restock form -->
+
+    <div class="restock-modal" id="recordRestockModal">
+        <div class="modal-card">
+
+            <div class="modal-heading">
+                <div>
+                    <h2>Record Supplier Delivery</h2>
+                    <p>Record received products and update available stock.</p>
+                </div>
+
+                <button type="button" class="modal-close" data-close="recordRestockModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="recordRestockForm">
+
+                <label for="restockSupplier">Supplier</label>
+                <select id="restockSupplier" required>
+                    <option value="">Select supplier</option>
+                </select>
+
+                <label for="restockProduct">Product</label>
+                <select id="restockProduct" required>
+                    <option value="">Select product</option>
+                </select>
+
+                <div id="currentStockInfo" class="stock-info">
+                    Select a product to view its current stock.
+                </div>
+
+                <label for="restockQuantity">Quantity Received</label>
+                <input type="number"
+                       id="restockQuantity"
+                       min="1"
+                       step="1"
+                       required>
+
+                <label for="restockReference">Delivery Reference / Notes</label>
+                <input type="text"
+                       id="restockReference"
+                       maxlength="100"
+                       placeholder="Optional invoice or delivery reference">
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" data-close="recordRestockModal">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-primary" id="saveRestockButton">
+                        Save Restock
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script src="../js/admin-layout.js"></script>
+    <script src="../js/restocking.js"></script>
+
+</body>
+</html>

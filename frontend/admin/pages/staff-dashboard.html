@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Staff Sales Dashboard | CASIA</title>
+    <link rel="stylesheet" href="../css/sales.css">
+    <link rel="stylesheet" href="../css/staff-sales.css">
+</head>
+<body class="staff-page" data-access-role="staff">
+    <div id="staffAccessMessage" class="staff-access-message" role="status" aria-live="polite">Verifying your staff account...</div>
+
+    <div id="staffWorkspace" class="staff-workspace" aria-hidden="true">
+        <header class="staff-topbar">
+            <div class="staff-brand">
+                <img src="../assets/images/casia-logo.png" alt="CASIA logo">
+                <div>
+                    <p class="staff-eyebrow">CASIA STAFF WORKSPACE</p>
+                    <h1>Sales & Checkout</h1>
+                    <p class="staff-identity">Signed in as <strong id="staffName">Staff</strong> · <span id="staffBusinessName">Assigned Business</span></p>
+                </div>
+            </div>
+            <button id="staffLogoutBtn" class="staff-logout" type="button">Log Out</button>
+        </header>
+
+        <main class="sales-page staff-sales-page">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">SALES OPERATIONS</p>
+                    <h2>Process a Customer Order</h2>
+                    <p class="subtitle">Select available products, review the order, and complete checkout.</p>
+                </div>
+            </header>
+
+            <section class="sales-layout" aria-label="Sales and checkout workspace">
+                <div class="panel product-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Available Products</h2>
+                            <p class="muted">Choose products to add to the customer order.</p>
+                        </div>
+                        <span id="productCount" class="count-badge">0 products</span>
+                    </div>
+                    <input id="productSearch" class="search-input" type="search" placeholder="Search products..." aria-label="Search products">
+                    <div id="categoryFilters" class="category-filters">
+                        <button class="category-button active" data-category="all" type="button">All</button>
+                    </div>
+                    <div id="productList" class="product-grid">
+                        <p class="muted">Loading products...</p>
+                    </div>
+                </div>
+
+                <aside class="panel order-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Current Order</h2>
+                            <p class="muted">Review items before checkout.</p>
+                        </div>
+                        <span id="orderCount" class="count-badge">0 items</span>
+                    </div>
+                    <div id="currentOrder">
+                        <div class="empty-order">
+                            <span class="empty-icon">🛒</span>
+                            <p>Your order is empty</p>
+                            <small>Select a product to get started.</small>
+                        </div>
+                    </div>
+                    <div class="order-summary">
+                        <div><span>Items</span><strong id="orderItems">0</strong></div>
+                        <div class="total-row"><span>Total</span><strong id="orderTotal">₱0.00</strong></div>
+                    </div>
+                    <div class="payment-box">
+                        <label for="cashTendered">Cash received</label>
+                        <div class="cash-input-wrap">
+                            <span>₱</span>
+                            <input id="cashTendered" type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal" aria-label="Cash received">
+                        </div>
+                        <div class="change-row"><span>Change</span><strong id="changeDue">₱0.00</strong></div>
+                    </div>
+                    <button id="clearOrder" class="secondary-button" type="button">Clear Order</button>
+                    <button id="completeSale" class="primary-button checkout-button" type="button">Complete Sale</button>
+                    <p class="checkout-note">Completed sales are saved to CASIA and stock is deducted automatically.</p>
+                </aside>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="receiptModal" class="receipt-modal" hidden>
+        <div class="receipt-card" role="dialog" aria-modal="true" aria-labelledby="receiptTitle">
+            <div id="receiptPrintArea" class="receipt-paper">
+                <div class="receipt-head">
+                    <strong id="receiptBusiness">CASIA</strong>
+                    <span id="receiptMeta"></span>
+                </div>
+                <div id="receiptLines" class="receipt-lines"></div>
+                <div class="receipt-totals">
+                    <div><span>Total</span><strong id="receiptTotal">₱0.00</strong></div>
+                    <div id="receiptTenderedRow" hidden><span>Cash</span><strong id="receiptTendered">₱0.00</strong></div>
+                    <div id="receiptChangeRow" hidden><span>Change</span><strong id="receiptChange">₱0.00</strong></div>
+                </div>
+                <p class="receipt-foot">Thank you for your order!</p>
+            </div>
+            <div class="receipt-actions">
+                <button id="printReceipt" class="secondary-button" type="button">Print</button>
+                <button id="closeReceipt" class="primary-button" type="button">New Order</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/sales.js"></script>
+</body>
+</html>

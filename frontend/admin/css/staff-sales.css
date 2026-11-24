@@ -1,0 +1,129 @@
+body.staff-page {
+    min-height: 100vh;
+    background: #edf4fd;
+}
+
+.staff-workspace {
+    width: min(100% - 40px, 1600px);
+    margin: 0 auto;
+    padding: 24px 0 40px;
+}
+
+.staff-page:not(.staff-authorized) .staff-workspace {
+    visibility: hidden;
+}
+
+.staff-access-message {
+    width: min(100% - 32px, 560px);
+    margin: 40px auto;
+    padding: 18px 22px;
+    color: #4e342e;
+    background: #fff;
+    border: 1px solid #dce8f7;
+    border-radius: 12px;
+    text-align: center;
+    font: 600 14px/1.5 Arial, sans-serif;
+}
+
+.staff-authorized .staff-access-message {
+    display: none;
+}
+
+.staff-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid #dce8f7;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(26, 68, 120, 0.05);
+}
+
+.staff-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+}
+
+.staff-brand img {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+}
+
+.staff-eyebrow {
+    margin: 0 0 4px;
+    color: #8a632d;
+    font: 800 10px/1.4 Arial, sans-serif;
+    letter-spacing: 1.5px;
+}
+
+.staff-brand h1 {
+    margin: 0;
+    color: #4e342e;
+    font: 800 clamp(19px, 3vw, 26px)/1.2 Arial, sans-serif;
+}
+
+.staff-identity {
+    margin: 6px 0 0;
+    color: #6b7280;
+    font: 12px/1.5 Arial, sans-serif;
+}
+
+.staff-logout {
+    flex: 0 0 auto;
+    padding: 10px 17px;
+    color: #fff;
+    background: #4e342e;
+    border: 1px solid #4e342e;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.staff-logout:hover:not(:disabled) {
+    background: #36231f;
+}
+
+.staff-sales-page {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.staff-sales-page .page-header {
+    margin-bottom: 20px;
+}
+
+.staff-sales-page .page-header h2 {
+    margin: 0;
+    color: #5a3807;
+    font-size: clamp(22px, 3vw, 30px);
+}
+
+@media (max-width: 700px) {
+    .staff-workspace {
+        width: min(100% - 24px, 1600px);
+        padding-top: 12px;
+    }
+
+    .staff-topbar {
+        align-items: flex-start;
+        padding: 13px;
+    }
+
+    .staff-brand img {
+        width: 44px;
+        height: 44px;
+    }
+
+    .staff-logout {
+        padding: 9px 11px;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="../assets/images/casia-logo.png">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/product-search.css">
+    <title>Product Search | CASIA Canteen</title>
+</head>
+<body data-page="product-search" data-title="Product Search">
+
+    <div class="app">
+
+        <!-- SIDE NAVIGATION (built by ../js/shell.js) -->
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="backdrop" id="backdrop"></div>
+
+        <div class="main">
+            <header class="topbar">
+                <button class="menu-btn" id="menuBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+                <span class="topbar-title" id="topbarTitle"></span>
+                <span class="topbar-user" id="topbarUser"></span>
+            </header>
+
+            <main class="page">
+                <div class="page-head"><h1>Product Search</h1><p>Look for the exact food or drink you need, then see which store sells it.</p></div>
+
+                <div class="search-hero">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input id="q" class="input" type="search" placeholder="Search a product, like “adobo”, “coffee” or “siomai”" autocomplete="off">
+                    <button class="clear" id="clear" aria-label="Clear search" hidden>&times;</button>
+                </div>
+                    <div class="recent" id="recent" hidden>
+                        <span class="muted small">Recent searches</span>
+                        <div class="chips" id="recentChips"></div>
+                        <button class="btn link small" id="clearRecent">Clear</button>
+                    </div>
+                </div>
+
+                <div class="filters panel">
+                    <div class="filter">
+                        <span class="field-label">Category</span>
+                        <div class="chips" id="catChips"></div>
+                    </div>
+                    <div class="filter">
+                        <label class="field-label" for="maxPrice" id="priceLabel">Max price</label>
+                        <input type="range" id="maxPrice" min="0" max="100" step="5" value="100">
+                    </div>
+                    <div class="filter">
+                        <label class="field-label" for="store">Store</label>
+                        <select class="select" id="store"></select>
+                    </div>
+                    <div class="filter">
+                        <label class="check"><input type="checkbox" id="availOnly"> Available only</label>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <span class="muted small" id="count"></span>
+                    <span class="spacer"></span>
+                    <select class="select" id="sort" aria-label="Sort products">
+                        <option value="relevance">Best match</option>
+                        <option value="low">Price: low to high</option>
+                        <option value="high">Price: high to low</option>
+                        <option value="rating">Top rated</option>
+                        <option value="name">Name A–Z</option>
+                    </select>
+                </div>
+
+                <section class="grid" id="results"></section>
+            </main>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Load order matters: data.js, then shell.js, then this page's script -->
+    <script src="../js/data.js"></script>
+    <script src="../js/shell.js"></script>
+    <script src="../js/product-search.js"></script>
+</body>
+</html>

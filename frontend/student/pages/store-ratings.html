@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="../assets/images/casia-logo.png">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/store-ratings.css">
+    <title>Store Ratings | CASIA Canteen</title>
+</head>
+<body data-page="store-ratings" data-title="Store Ratings">
+
+    <div class="app">
+
+        <!-- SIDE NAVIGATION (built by ../js/shell.js) -->
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="backdrop" id="backdrop"></div>
+
+        <div class="main">
+            <header class="topbar">
+                <button class="menu-btn" id="menuBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+                <span class="topbar-title" id="topbarTitle"></span>
+                <span class="topbar-user" id="topbarUser"></span>
+            </header>
+
+            <main class="page">
+                <div class="page-head"><h1>Store Ratings</h1><p>Tell others about your overall experience with a store.</p></div>
+                <div class="mini-stats" id="mine"></div>
+                <div class="rating-store-search">
+                    <label for="businessSearch">Find a business to rate</label>
+                    <input type="search" id="businessSearch" placeholder="Search business name or location" autocomplete="off">
+                    <span id="businessSearchCount" class="muted small" aria-live="polite"></span>
+                </div>
+
+                <div class="rate-layout">
+                    <aside class="rate-list" id="list" aria-label="Stores"></aside>
+                    <section class="rate-panel" id="panel" aria-live="polite"></section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Load order matters: data.js, then shell.js, then this page's script -->
+    <script src="../js/data.js"></script>
+    <script src="../js/shell.js"></script>
+    <script src="../js/store-ratings.js"></script>
+</body>
+</html>

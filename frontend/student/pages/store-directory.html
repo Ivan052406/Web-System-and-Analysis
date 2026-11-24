@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="../assets/images/casia-logo.png">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/store-directory.css">
+    <title>Store Directory | CASIA Canteen</title>
+</head>
+<body data-page="store-directory" data-title="Store Directory">
+
+    <div class="app">
+
+        <!-- SIDE NAVIGATION (built by ../js/shell.js) -->
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="backdrop" id="backdrop"></div>
+
+        <div class="main">
+            <header class="topbar">
+                <button class="menu-btn" id="menuBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+                <span class="topbar-title" id="topbarTitle"></span>
+                <span class="topbar-user" id="topbarUser"></span>
+            </header>
+
+            <main class="page">
+                <div class="page-head"><h1>Store Directory</h1><p>Every store on campus, added and kept up to date by the stores themselves.</p></div>
+
+                <div class="toolbar">
+                    <div class="chips" id="areaChips"></div>
+                    <span class="spacer"></span>
+                    <select class="select" id="sort" aria-label="Sort stores">
+                        <option value="name">Name A–Z</option>
+                        <option value="rating">Top rated</option>
+                        <option value="open">Open first</option>
+                        <option value="products">Most products</option>
+                    </select>
+                    <div class="view-toggle" role="group" aria-label="View">
+                        <button id="viewCards" class="active" aria-label="Card view"><i class="fa-solid fa-table-cells-large"></i></button>
+                        <button id="viewList" aria-label="List view"><i class="fa-solid fa-list"></i></button>
+                    </div>
+                </div>
+
+                <nav class="letters" id="letters" aria-label="Jump to a letter" hidden></nav>
+                <div id="directory"></div>
+            </main>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Load order matters: data.js, then shell.js, then this page's script -->
+    <script src="../js/data.js"></script>
+    <script src="../js/shell.js"></script>
+    <script src="../js/store-directory.js"></script>
+</body>
+</html>

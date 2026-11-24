@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CASIA | Branch Management</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/branches.css">
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+  <main class="page-content branches-page">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">BUSINESS SETTINGS</p>
+        <h1>Branch Management</h1>
+        <p class="subtitle">Create and manage your business locations. Every branch has separate inventory and sales reports.</p>
+      </div>
+    </header>
+    <div id="branchMessage" class="branch-message" role="status" aria-live="polite"></div>
+    <section class="branch-grid">
+      <article class="branch-panel">
+        <h2>Add a Branch</h2>
+        <form id="branchForm">
+          <label for="branchName">Branch Name</label>
+          <input id="branchName" name="branch_name" maxlength="150" required placeholder="e.g. CASIA Main Campus">
+          <label for="branchAddress">Address <span>(optional)</span></label>
+          <textarea id="branchAddress" name="address" rows="3" maxlength="500" placeholder="Branch address"></textarea>
+          <label for="branchContact">Contact Number <span>(optional)</span></label>
+          <input id="branchContact" name="contact" maxlength="40" placeholder="Branch contact number">
+          <button class="branch-primary" type="submit">Create Branch</button>
+        </form>
+        <p class="branch-note">New branches receive the business product catalogue with zero stock. Use the Restocking page after selecting the new branch to record its opening stock.</p>
+      </article>
+      <article class="branch-panel">
+        <div class="branch-list-heading">
+          <div><h2>Your Branches</h2><p>Only active branches can be selected by staff.</p></div>
+          <span id="branchCount" class="branch-count">0 branches</span>
+        </div>
+        <div class="branch-table-wrap">
+          <table>
+            <thead><tr><th>Branch</th><th>Address</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="branchesTable"><tr><td colspan="4">Loading branches...</td></tr></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+  </main>
+  <script src="../js/admin-layout.js"></script>
+  <script src="../js/branches.js"></script>
+</body>
+</html>

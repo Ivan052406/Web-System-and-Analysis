@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASIA | Main Dashboard</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <main class="dashboard-page">
+
+        <header class="dashboard-header">
+            <div>
+                <span class="eyebrow">CASIA MANAGEMENT</span>
+                <h1>Main Dashboard</h1>
+                <p>Business-wide summary across all active branches. Use Reports &amp; Visualizations to filter a specific branch.</p>
+                <span id="dashboardDate" class="dashboard-date"></span>
+            </div>
+
+            <button type="button"
+                    class="btn btn-outline"
+                    id="refreshDashboard">
+                <i class="fa-solid fa-rotate"></i>
+                Refresh
+            </button>
+        </header>
+
+        <div id="dashboardMessage"
+             class="dashboard-message"
+             role="status"
+             aria-live="polite"></div>
+
+        <section class="dashboard-kpis">
+
+            <article class="kpi-card">
+                <div class="kpi-icon sales">
+                    <i class="fa-solid fa-peso-sign"></i>
+                </div>
+                <div>
+                    <span>Today's Sales</span>
+                    <h2 id="todaySales">₱0.00</h2>
+                </div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon transactions">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
+                <div>
+                    <span>Total Transactions</span>
+                    <h2 id="totalTransactions">0</h2>
+                </div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon products">
+                    <i class="fa-solid fa-box"></i>
+                </div>
+                <div>
+                    <span>Total Products</span>
+                    <h2 id="totalProducts">0</h2>
+                </div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon branches">
+                    <i class="fa-solid fa-code-branch"></i>
+                </div>
+                <div>
+                    <span>Active Branches</span>
+                    <h2 id="totalBranches">0</h2>
+                </div>
+            </article>
+
+            <article class="kpi-card">
+                <div class="kpi-icon low-stock">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                    <span>Low Stock Products</span>
+                    <h2 id="lowStockProducts">0</h2>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="dashboard-summary">
+
+            <article class="summary-card">
+                <span>Total Items Sold</span>
+                <h2 id="totalItemsSold">0</h2>
+            </article>
+
+            <article class="summary-card">
+                <span>Out of Stock</span>
+                <h2 id="outOfStockProducts">0</h2>
+            </article>
+
+            <article class="summary-card">
+                <span>Total Stock Units</span>
+                <h2 id="totalStockUnits">0</h2>
+            </article>
+
+            <article class="summary-card">
+                <span>Peak Sales Period</span>
+                <h2 id="peakPeriod">No data</h2>
+                <p><span id="peakTransactions">0</span> transactions</p>
+            </article>
+
+            <article class="summary-card">
+                <span>Best-Selling Product</span>
+                <h2 id="bestSellingProduct">No data</h2>
+                <p><span id="bestSellingQuantity">0</span> units sold</p>
+            </article>
+
+        </section>
+
+        <section class="dashboard-main-grid">
+            <article class="dashboard-panel inventory-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Combined Stock Summary</h2>
+                        <p>Inventory position across all active branches</p>
+                    </div>
+                    <a class="dashboard-report-link" href="/admin/pages/analytics.html">View visual reports</a>
+                </div>
+                <div class="inventory-overview">
+                    <div class="overview-stat">
+                        <div class="overview-icon available"><i class="fa-solid fa-circle-check"></i></div>
+                        <div><span>Available Product-Branch Records</span><h3 id="availableProducts">0</h3></div>
+                    </div>
+                    <div class="overview-stat">
+                        <div class="overview-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div><span>Low-Stock Product-Branch Records</span><h3 id="overviewLowStock">0</h3></div>
+                    </div>
+                    <div class="overview-stat">
+                        <div class="overview-icon danger"><i class="fa-solid fa-circle-xmark"></i></div>
+                        <div><span>Out-of-Stock Product-Branch Records</span><h3 id="overviewOutOfStock">0</h3></div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="dashboard-panel table-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Branch Performance</h2>
+                    <p>Today's sales, transactions, and stock position by branch</p>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Branch</th><th>Today's Sales</th><th>Transactions</th><th>Items Sold</th><th>Stock Units</th><th>Low-Stock Records</th></tr></thead>
+                    <tbody id="branchPerformanceTable"><tr><td colspan="6" class="table-empty">Loading branch performance...</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="dashboard-panel table-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Recent Transactions</h2>
+                    <p>Latest recorded sales transactions</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Branch</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Business</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="transactionsTable">
+                        <tr>
+                            <td colspan="6" class="table-empty">
+                                Loading transactions...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="dashboard-panel table-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Recent Restocking</h2>
+                    <p>Latest inventory restocking activities</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Restock ID</th>
+                            <th>Branch</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Supplier</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="restockingTable">
+                        <tr>
+                            <td colspan="6" class="table-empty">
+                                Loading restocking records...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="../js/admin-layout.js"></script>
+    <script src="../js/dashboard.js"></script>
+
+</body>
+</html>

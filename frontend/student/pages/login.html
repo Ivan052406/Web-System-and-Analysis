@@ -1,0 +1,631 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASIA | User and Admin / Staff Login</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+
+    <main class="page-wrapper">
+
+        <header class="page-header">
+            <img src="../assets/images/casia-logo.png"
+                 alt="CASIA Logo"
+                 class="header-logo">
+
+            <span>CASIA Canteen Management System</span>
+        </header>
+
+        <nav class="role-switch" aria-label="Select login type">
+            <button type="button" id="userRoleBtn" class="role-button selected" aria-pressed="true">
+                <i class="fa-solid fa-user"></i>
+                User Login
+            </button>
+            <button type="button" id="adminRoleBtn" class="role-button" aria-pressed="false">
+                <i class="fa-solid fa-user-shield"></i>
+                Admin / Staff Login
+            </button>
+        </nav>
+
+        <section class="auth-view active" id="userAuthView">
+
+            <div class="container" id="userContainer">
+
+                <div class="form-container sign-up">
+                    <form id="userSignupForm">
+
+                        <h1>Create Account</h1>
+
+                        <span>Sign up to access the CASIA system</span>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Full Name"
+                            autocomplete="name"
+                            maxlength="100"
+                            required
+                        >
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email Address"
+                            autocomplete="email"
+                            required
+                        >
+
+                        <div class="password-input">
+                            <input
+                                type="password"
+                                name="password"
+                                id="userSignupPassword"
+                                placeholder="Password"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                            >
+
+                            <i class="fa-solid fa-eye toggle-password"
+                               data-target="userSignupPassword"
+                               role="button"
+                               tabindex="0"
+                               aria-label="Show password"></i>
+                        </div>
+
+                        <div class="password-input">
+                            <input
+                                type="password"
+                                name="confirm_password"
+                                id="userSignupConfirm"
+                                placeholder="Confirm Password"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                            >
+
+                            <i class="fa-solid fa-eye toggle-password"
+                               data-target="userSignupConfirm"
+                               role="button"
+                               tabindex="0"
+                               aria-label="Show password"></i>
+                        </div>
+
+                        <div class="form-message"
+                             id="userSignupMessage"
+                             role="status"
+                             aria-live="polite"></div>
+
+                        <button type="submit" class="primary-button">
+                            Create Account
+                        </button>
+
+                        <p class="switch-text">
+                            Already have an account?
+
+                            <a href="#"
+                               data-switch="login"
+                               data-container="userContainer">
+                                Sign In
+                            </a>
+                        </p>
+
+                    </form>
+                </div>
+
+                <div class="form-container sign-in">
+                    <form id="userSigninForm">
+
+                        <h1>Welcome Back!</h1>
+
+                        <span>Sign in to your CASIA account</span>
+
+                        <input
+                            type="email"
+                            name="email"
+                            id="userSigninEmail"
+                            placeholder="Email Address"
+                            autocomplete="email"
+                            required
+                        >
+
+                        <div class="password-input">
+                            <input
+                                type="password"
+                                name="password"
+                                id="userSigninPassword"
+                                placeholder="Password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <i class="fa-solid fa-eye toggle-password"
+                               data-target="userSigninPassword"
+                               role="button"
+                               tabindex="0"
+                               aria-label="Show password"></i>
+                        </div>
+
+                        <label class="remember-account">
+                            <input
+                                type="checkbox"
+                                id="userRemember"
+                            >
+
+                            Remember my account
+                        </label>
+
+                        <p class="switch-text">
+                        <a href="/student/pages/forgot-password.html">
+                            Forgot your password?
+                        </a>
+                         </p>
+
+                        <div class="form-message"
+                             id="userSigninMessage"
+                             role="status"
+                             aria-live="polite"></div>
+
+                        <button type="submit" class="primary-button">
+                            Sign In
+                        </button>
+
+                        <p class="switch-text">
+                            New Here?
+
+                            <a href="#"
+                               data-switch="register"
+                               data-container="userContainer">
+                                Create an account
+                            </a>
+                        </p>
+
+                    </form>
+                </div>
+
+                <div class="toggle-container">
+                    <div class="toggle">
+
+                        <div class="toggle-panel toggle-left">
+
+                            <img src="../assets/images/casia-logo.png"
+                                 alt="CASIA Logo"
+                                 class="brand-logo">
+
+                            <h1>Welcome Back!</h1>
+
+                            <p>
+                                Sign in to your account and continue
+                                using CASIA.
+                            </p>
+
+                            <button type="button"
+                                    class="outline-button"
+                                    data-switch="login"
+                                    data-container="userContainer">
+                                Sign In
+                            </button>
+
+                        </div>
+
+                        <div class="toggle-panel toggle-right">
+
+                            <img src="../assets/images/casia-logo.png"
+                                 alt="CASIA Logo"
+                                 class="brand-logo">
+
+                            <h1>Hello, Friend!</h1>
+
+                            <p>
+                                Create your account to access
+                                the CASIA system.
+                            </p>
+
+                            <button type="button"
+                                    class="outline-button"
+                                    data-switch="register"
+                                    data-container="userContainer">
+                                Sign Up
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="auth-view" id="adminAuthView" aria-labelledby="adminStaffHeading">
+            <div class="admin-auth-heading">
+                <h1 id="adminStaffHeading">Admin / Staff Login</h1>
+                <p>Choose your access type to continue.</p>
+                <div class="admin-staff-switch" role="group" aria-label="Choose Admin or Staff access">
+                    <button type="button" id="adminModeBtn" class="admin-staff-mode-button selected" aria-pressed="true">
+                        <i class="fa-solid fa-user-shield"></i> Admin
+                    </button>
+                    <button type="button" id="staffModeBtn" class="admin-staff-mode-button" aria-pressed="false">
+                        <i class="fa-solid fa-cash-register"></i> Staff
+                    </button>
+                </div>
+            </div>
+
+            <div id="adminModeView" class="admin-staff-mode active">
+                <div class="container" id="adminContainer">
+
+                <div class="form-container sign-up">
+                    <form id="adminSignupForm"
+                          method="POST"
+                          action="/api/admin/signup">
+
+                        <h1>Create Business</h1>
+
+                        <span>
+                            Set up your company and administrator account
+                        </span>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Company Name"
+                            autocomplete="organization"
+                            maxlength="150"
+                            required
+                        >
+
+                        <div class="form-row">
+
+                            <select name="company_type"
+                                    aria-label="Company Type"
+                                    required>
+
+                                <option value="" disabled selected>
+                                    Company Type
+                                </option>
+
+                                <option value="school_canteen">
+                                    School Canteen
+                                </option>
+
+                                <option value="office_cafeteria">
+                                    Office Cafeteria
+                                </option>
+
+                                <option value="restaurant">
+                                    Restaurant / Eatery
+                                </option>
+
+                                <option value="cafe_bakery">
+                                    Cafe / Bakery
+                                </option>
+
+                                <option value="food_stall">
+                                    Food Stall / Kiosk
+                                </option>
+
+                                <option value="catering">
+                                    Catering Service
+                                </option>
+
+                                <option value="other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                            <input
+                                type="tel"
+                                name="contact"
+                                placeholder="Contact Number"
+                                autocomplete="tel"
+                                inputmode="tel"
+                                pattern="[0-9+ \-]{7,20}"
+                                title="Enter a valid contact number"
+                                required
+                            >
+
+                        </div>
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Company Email"
+                            autocomplete="email"
+                            required
+                        >
+
+                        <input
+                            type="text"
+                            name="address"
+                            placeholder="Company Address"
+                            autocomplete="street-address"
+                            required
+                        >
+
+                        <div class="form-row">
+
+                            <div class="password-input">
+                                <input
+                                    type="password"
+                                    name="password"
+                                    id="adminSignupPassword"
+                                    placeholder="Password"
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                    required
+                                >
+
+                                <i class="fa-solid fa-eye toggle-password"
+                                   data-target="adminSignupPassword"
+                                   role="button"
+                                   tabindex="0"
+                                   aria-label="Show password"></i>
+                            </div>
+
+                            <div class="password-input">
+                                <input
+                                    type="password"
+                                    name="confirm_password"
+                                    id="adminSignupConfirm"
+                                    placeholder="Confirm Password"
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                    required
+                                >
+
+                                <i class="fa-solid fa-eye toggle-password"
+                                   data-target="adminSignupConfirm"
+                                   role="button"
+                                   tabindex="0"
+                                   aria-label="Show password"></i>
+                            </div>
+
+                        </div>
+
+                        <div class="icon-input">
+                            <i class="fa-solid fa-key field-icon"></i>
+
+                            <input
+                                type="password"
+                                name="access_code"
+                                id="adminSignupAccessCode"
+                                class="access-code"
+                                placeholder="Create Business Access Code"
+                                autocomplete="new-password"
+                                minlength="8"
+                                maxlength="64"
+                                required
+                            >
+
+                            <i class="fa-solid fa-eye toggle-password"
+                               data-target="adminSignupAccessCode"
+                               role="button"
+                               tabindex="0"
+                               aria-label="Show access code"></i>
+                        </div>
+
+                        <div class="form-message"
+                             id="adminSignupMessage"
+                             role="status"
+                             aria-live="polite"></div>
+
+                        <button type="submit" class="primary-button">
+                            Create Business
+                        </button>
+
+                        <p class="switch-text">
+                            Already have an account?
+
+                            <a href="#"
+                               data-switch="login"
+                               data-container="adminContainer">
+                                Sign In
+                            </a>
+                        </p>
+
+                    </form>
+                </div>
+
+                <div class="form-container sign-in">
+                    <form id="adminSigninForm"
+                          method="POST"
+                          action="/api/admin/login">
+
+                        <h1>Company Sign In</h1>
+
+                        <span>
+                            Use your administrator email, password,
+                            and business access code
+                        </span>
+
+                        <input
+                            type="email"
+                            name="email"
+                            id="adminSigninEmail"
+                            placeholder="Company Email"
+                            autocomplete="email"
+                            required
+                        >
+
+                        <div class="password-input">
+                            <input
+                                type="password"
+                                name="password"
+                                id="adminSigninPassword"
+                                placeholder="Password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <i class="fa-solid fa-eye toggle-password"
+                               data-target="adminSigninPassword"
+                               role="button"
+                               tabindex="0"
+                               aria-label="Show password"></i>
+                        </div>
+
+                        <div class="password-input">
+                            <input
+                                type="password"
+                                name="access_code"
+                                id="adminSigninAccessCode"
+                                placeholder="Business Access Code"
+                                autocomplete="off"
+                                minlength="8"
+                                maxlength="64"
+                                required
+                            >
+
+                            <i class="fa-solid fa-eye toggle-password"
+                               data-target="adminSigninAccessCode"
+                               role="button"
+                               tabindex="0"
+                               aria-label="Show access code"></i>
+                        </div>
+
+                        <label class="remember-account">
+                            <input
+                                type="checkbox"
+                                id="adminRemember"
+                            >
+
+                            Remember my account
+                        </label>
+
+                       
+
+                        <p class="switch-text">
+                        <a href="/student/pages/forgot-password.html?role=admin">
+                            Forgot your password?
+                        </a>
+                         </p>
+
+                        <div class="form-message"
+                             id="adminSigninMessage"
+                             role="status"
+                             aria-live="polite"></div>
+
+                        <button type="submit" class="primary-button">
+                            Sign In
+                        </button>
+
+                        <p class="switch-text">
+                            New Admin?
+
+                            <a href="#"
+                               data-switch="register"
+                               data-container="adminContainer">
+                                Create a business
+                            </a>
+                        </p>
+
+                    </form>
+                </div>
+
+                <div class="toggle-container">
+                    <div class="toggle">
+
+                        <div class="toggle-panel toggle-left">
+
+                            <img src="../assets/images/casia-logo.png"
+                                 alt="CASIA Logo"
+                                 class="brand-logo">
+
+                            <h1>Welcome Back, Admin!</h1>
+
+                            <p>
+                                Sign in to manage your company
+                                and business operations.
+                            </p>
+
+                            <button type="button"
+                                    class="outline-button"
+                                    data-switch="login"
+                                    data-container="adminContainer">
+                                Sign In
+                            </button>
+
+                        </div>
+
+                        <div class="toggle-panel toggle-right">
+
+                            <img src="../assets/images/casia-logo.png"
+                                 alt="CASIA Logo"
+                                 class="brand-logo">
+
+                            <h1>New Admin?</h1>
+
+                            <p>
+                                Register your business and
+                                create your administrator account.
+                            </p>
+
+                            <button type="button"
+                                    class="outline-button"
+                                    data-switch="register"
+                                    data-container="adminContainer">
+                                Sign Up
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            </div>
+
+            <div id="staffModeView" class="admin-staff-mode" hidden>
+                <div class="staff-auth-card">
+                <form id="staffSigninForm" class="staff-auth-form" novalidate>
+                    <div class="staff-auth-icon" aria-hidden="true">
+                        <i class="fa-solid fa-cash-register"></i>
+                    </div>
+                    <h1 id="staffSigninTitle">Staff / Cashier Access</h1>
+                    <span>Enter the shared staff access code created by your Business Owner.</span>
+
+                    <label for="staffAccessCode">Staff Access Code</label>
+                    <div class="password-input">
+                        <input type="password" name="access_code" id="staffAccessCode"
+                               placeholder="Enter business access code" minlength="8" maxlength="64"
+                               autocomplete="off" required>
+                        <i class="fa-solid fa-eye toggle-password" data-target="staffAccessCode"
+                           role="button" tabindex="0" aria-label="Show access code"></i>
+                    </div>
+
+                    <button type="button" id="findStaffBranches" class="secondary-button">Find Available Branches</button>
+
+                    <div id="staffBranchPicker" hidden>
+                        <label for="staffBranchSelect">Choose the branch where you are assigned</label>
+                        <select id="staffBranchSelect" name="branch_id" required>
+                            <option value="">Select branch</option>
+                        </select>
+                        <button type="submit" id="staffAccessSubmit" class="primary-button">Open Sales Workspace</button>
+                    </div>
+
+                    <div class="form-message" id="staffSigninMessage" role="status" aria-live="polite"></div>
+                    <p class="switch-text">Staff access is limited to sales and checkout. Ask the Business Owner if you do not have the access code.</p>
+                </form>
+            </div>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            <p>© 2026 CASIA Canteen Management System</p>
+        </footer>
+
+    </main>
+
+    <script src="../js/auth.js"></script>
+
+</body>
+</html>

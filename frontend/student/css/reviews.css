@@ -1,0 +1,81 @@
+/* ==========================================================================
+   reviews.css — Reviews & Feedback page only
+   ========================================================================== */
+
+/*THIS IS FOR THE THREE TABS*/
+.tabs{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+
+.tab{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.78);
+    color: var(--ink);
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+}
+.tab.active{ background-color: var(--brown); color: #fff; }
+.tab .nav-count{ margin-left: 0; }
+
+/*THIS IS FOR THE WRITE FORM*/
+.form-row{ display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; margin-bottom: 16px; }
+.select.block{ width: 100%; }
+.top-gap{ margin-top: 18px; }
+
+.form-foot{ display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.form-error{ flex: 1; font-size: 12.5px; color: var(--bad); }
+
+/*THIS IS FOR EACH REVIEW*/
+.review{
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.82);
+    box-shadow: var(--shadow-soft);
+}
+
+.review-head{ display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.rv-who{ flex: 1; display: flex; flex-direction: column; }
+.rv-who small{ color: var(--muted); }
+
+.rv-avatar{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--tan);
+    color: var(--brown-dark);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.review-about{ margin-bottom: 6px; font-size: 12.5px; color: var(--muted); }
+.review-text{ margin-bottom: 10px; font-size: 14px; }
+.review textarea.input{ margin-bottom: 8px; }
+.review-foot{ display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+
+/*THIS IS FOR THE "Helpful" BUTTON*/
+.helpful{
+    padding: 6px 14px;
+    border: 1px solid #ddd0c6;
+    border-radius: 999px;
+    background-color: #fff;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.helpful:hover:not(:disabled){ background-color: var(--cream); }
+.helpful.on{ background-color: var(--brown); border-color: var(--brown); color: #fff; }
+.helpful:disabled{ opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 600px){
+    .form-row{ grid-template-columns: 1fr; }
+}

@@ -1,0 +1,2 @@
+/* Shared baseline for newly added shared UI. Existing legacy pages retain their page-specific resets. */
+:root { color-scheme: light; }

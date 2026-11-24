@@ -1,0 +1,81 @@
+<aside class="navbar" id="sidebar">
+
+    <!-- TOGGLE -->
+    <button class="sidebar-toggle" id="sidebarToggle"
+            type="button" aria-label="Collapse sidebar">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- BRAND -->
+    <div class="brand">
+        <img src="/admin/assets/images/casia-logo.png" alt="CASIA logo" class="brand-logo"
+             onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'brand-fallback',textContent:'CASIA'}))">
+        <span class="brand-role">STORE OWNER</span>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="nav-section">
+
+        <a href="/admin/pages/dashboard.html" class="nav-link" title="Dashboard">
+            <i class="nav-icon fa-solid fa-house"></i>
+            <span class="nav-text">Dashboard</span>
+        </a>
+
+        <p class="nav-heading">Operations</p>
+
+        <a href="/admin/pages/sales.html" class="nav-link" title="Product Management">
+            <i class="nav-icon fa-solid fa-cart-shopping"></i>
+            <span class="nav-text">Product Management</span>
+        </a>
+
+        <a href="/admin/pages/branches.html" class="nav-link" title="Branch Management">
+            <i class="nav-icon fa-solid fa-code-branch"></i>
+            <span class="nav-text">Branch Management</span>
+        </a>
+
+        <a href="/admin/pages/inventory.html" class="nav-link" title="Inventory Management">
+            <i class="nav-icon fa-solid fa-boxes-stacked"></i>
+            <span class="nav-text">Inventory Management</span>
+        </a>
+
+        <a href="/admin/pages/restocking.html" class="nav-link" title="Restocking">
+            <i class="nav-icon fa-solid fa-rotate"></i>
+            <span class="nav-text">Restocking</span>
+        </a>
+
+        <p class="nav-heading">Customers and Reports</p>
+
+        <a href="/admin/pages/analytics.html" class="nav-link" title="Reports and Visualizations">
+            <i class="nav-icon fa-solid fa-chart-column"></i>
+            <span class="nav-text">Reports & Visualizations</span>
+        </a>
+
+        <a href="/admin/pages/insights.html" class="nav-link" title="Demand and Restock Insights">
+            <i class="nav-icon fa-solid fa-lightbulb"></i>
+            <span class="nav-text">Demand & Restock Insights</span>
+        </a>
+
+    </nav>
+
+    <!-- FOOTER -->
+    <div class="sidebar-footer">
+        <div class="user">
+            <span class="user-avatar"><i class="fa-solid fa-user"></i></span>
+            <strong class="user-name">Store Owner</strong>
+        </div>
+        <a href="/student/pages/login.html" class="logout-btn" id="logoutBtn" title="Log out">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="logout-text">Log out</span>
+        </a>
+    </div>
+
+</aside>
+
+<div class="owner-branch-bar" id="ownerBranchBar" aria-label="Owner branch selector">
+    <label for="ownerBranchSelect"><i class="fa-solid fa-code-branch"></i> Branch filter</label>
+    <select id="ownerBranchSelect" aria-label="Choose branch for reports and operations">
+        <option value="">Loading branches...</option>
+    </select>
+    <span class="branch-filter-help">Dashboard summarizes all branches; reports and stock pages use this selection.</span>
+    <a href="/admin/pages/branches.html" class="manage-branches-link">Manage branches</a>
+</div>
