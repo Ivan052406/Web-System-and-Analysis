@@ -102,9 +102,29 @@ async function loadStaffSession(req) {
  * Supabase-only authentication.
  * Does not inspect the shared Staff cookie.
  */
+// Short-lived cache of verified Supabase logins. Calling Supabase on every API
+// request is the slowest step; a verified login is reused for 60 seconds.
+const AUTH_CACHE = new Map();
+const AUTH_CACHE_TTL_MS = 60 * 1000;
+
+function authCacheKey(req) {
+    const cookie = req.headers.cookie || "";
+    if (!cookie) return null;
+    return crypto.createHash("sha256").update(cookie).digest("hex");
+}
+
 async function requireSupabaseAuth(req, res, next) {
     try {
         const supabase = createSupabaseServerClient(req, res);
+        const cacheKey = authCacheKey(req);
+        const cached = cacheKey ? AUTH_CACHE.get(cacheKey) : null;
+
+        if (cached && cached.expiresAt > Date.now()) {
+            req.supabase = supabase;
+            req.authUser = cached.authUser;
+            req.staffUser = { ...cached.account };
+            return next();
+        }
 
         const { data, error } = await supabase.auth.getUser();
 
@@ -165,6 +185,15 @@ async function requireSupabaseAuth(req, res, next) {
                     message: "Your business is inactive. Please contact support."
                 });
             }
+        }
+
+        if (cacheKey) {
+            if (AUTH_CACHE.size > 1000) AUTH_CACHE.clear();
+            AUTH_CACHE.set(cacheKey, {
+                expiresAt: Date.now() + AUTH_CACHE_TTL_MS,
+                authUser: data.user,
+                account
+            });
         }
 
         req.supabase = supabase;

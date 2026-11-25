@@ -7,24 +7,34 @@
 const service = require("./product.service.js");
 const db = service.db;
 const { requireRole } = require("../../middleware/auth.middleware");
+const fs = require("fs/promises");
+const path = require("path");
+
+const PRODUCT_UPLOAD_DIR = path.resolve(__dirname, "../../../uploads/products");
+const PRODUCT_IMAGE_EXTENSIONS = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
+const MAX_PRODUCT_IMAGE_BYTES = 3 * 1024 * 1024;
+const MAX_DESCRIPTION_LENGTH = 500;
+
+// Returns trimmed text up to 500 characters, or null when empty.
+function normalizeDescription(value) {
+    if (typeof value !== "string") return null;
+    const text = value.trim().slice(0, MAX_DESCRIPTION_LENGTH);
+    return text || null;
+}
+
+// Checks the file's real signature, so renamed non-image files are rejected.
+function detectImageType(buffer) {
+    if (buffer.length >= 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) return "image/jpeg";
+    if (buffer.length >= 8 && buffer.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) return "image/png";
+    if (buffer.length >= 12 && buffer.subarray(0, 4).toString("ascii") === "RIFF" && buffer.subarray(8, 12).toString("ascii") === "WEBP") return "image/webp";
+    return null;
+}
 
 
 // GET /api/data
-
-
-
 // POST /api/addProduct
-
-
-
 // PUT /api/products/:id
-
-
-
 // PATCH /api/products/:id/status
-
-
-
 // DELETE /api/products/:id
 
 // Express request handlers extracted from the original route declarations.
@@ -56,7 +66,7 @@ const handleGetData1 = async (req, res) => {
         }
         const result = await service.query(`
             SELECT p.product_id, p.category_id, p.product_name, p.price,
-                   p.minimum_stock, p.status, p.created_at,
+                   p.minimum_stock, p.status, p.created_at, p.image_url, p.description,
                    c.category_name, COALESCE(i.quantity, 0)::int AS quantity
             FROM public.products p
             LEFT JOIN public.categories c ON p.category_id = c.category_id
@@ -73,6 +83,7 @@ const handleGetData1 = async (req, res) => {
 
 const handlePostAddProduct2 = async (req, res) => {
     const { category_id, product_name, price, minimum_stock = 0 } = req.body;
+    const description = normalizeDescription(req.body.description);
 
     const categoryId = Number(category_id);
     const productPrice = Number(price);
@@ -99,10 +110,10 @@ const handlePostAddProduct2 = async (req, res) => {
 
         const inserted = await client.query(
             `INSERT INTO products
-                (category_id, product_name, price, minimum_stock, business_id)
-             VALUES ($1, $2, $3, $4, $5)
+                (category_id, product_name, price, minimum_stock, business_id, description)
+             VALUES ($1, $2, $3, $4, $5, $6)
              RETURNING product_id`,
-            [categoryId, product_name.trim(), productPrice, minStock, businessId]
+            [categoryId, product_name.trim(), productPrice, minStock, businessId, description]
         );
 
         const productId = inserted.rows[0].product_id;
@@ -139,6 +150,7 @@ const handlePutProductsId3 = async (req, res) => {
     const productId = Number(req.params.id);
     const businessId = Number(req.staffUser?.business_id);
     const { category_id, product_name, price, minimum_stock } = req.body;
+    const description = normalizeDescription(req.body.description);
 
     if (!Number.isInteger(businessId) || businessId < 1) {
         return res.status(403).json({ message: "Your account is not assigned to an active business." });
@@ -163,15 +175,17 @@ const handlePutProductsId3 = async (req, res) => {
              SET category_id = $1,
                  product_name = $2,
                  price = $3,
-                 minimum_stock = $4
-             WHERE product_id = $5
-               AND business_id = $6
+                 minimum_stock = $4,
+                 description = $5
+             WHERE product_id = $6
+               AND business_id = $7
              RETURNING *`,
             [
                 Number(category_id),
                 product_name.trim(),
                 Number(price),
                 Number(minimum_stock),
+                description,
                 productId,
                 businessId
             ]
@@ -318,4 +332,103 @@ const handleDeleteProductsId5 = async (req, res) => {
     }
 };
 
-module.exports = { handleGetData1, handlePostAddProduct2, handlePutProductsId3, handlePatchProductsIdStatus4, handleDeleteProductsId5 };
+// POST /api/products/:id/image  (body: { image: "data:image/jpeg;base64,..." })
+const handlePostProductImage6 = async (req, res) => {
+    const productId = Number(req.params.id);
+    const businessId = Number(req.staffUser?.business_id);
+
+    if (!Number.isInteger(businessId) || businessId < 1) {
+        return res.status(403).json({ message: "Your account is not assigned to an active business." });
+    }
+    if (!Number.isInteger(productId) || productId < 1) {
+        return res.status(400).json({ message: "Invalid product ID." });
+    }
+
+    const match = typeof req.body?.image === "string"
+        ? req.body.image.match(/^data:([^;]+);base64,(.+)$/s)
+        : null;
+    if (!match) {
+        return res.status(400).json({ message: "Please choose an image file." });
+    }
+
+    const buffer = Buffer.from(match[2], "base64");
+    if (!buffer.length || buffer.length > MAX_PRODUCT_IMAGE_BYTES) {
+        return res.status(400).json({ message: "The photo must be 3 MB or smaller." });
+    }
+
+    const detected = detectImageType(buffer);
+    if (!detected || match[1] !== detected) {
+        return res.status(400).json({ message: "Only JPG, PNG or WEBP photos are allowed." });
+    }
+
+    try {
+        const existing = await service.query(
+            "SELECT image_url FROM public.products WHERE product_id = $1 AND business_id = $2",
+            [productId, businessId]
+        );
+        if (!existing.rowCount) {
+            return res.status(404).json({ message: "Product not found." });
+        }
+
+        await fs.mkdir(PRODUCT_UPLOAD_DIR, { recursive: true });
+        const fileName = `product-${businessId}-${productId}-${Date.now()}.${PRODUCT_IMAGE_EXTENSIONS[detected]}`;
+        await fs.writeFile(path.join(PRODUCT_UPLOAD_DIR, fileName), buffer);
+
+        const imageUrl = `/uploads/products/${fileName}`;
+        await service.query(
+            "UPDATE public.products SET image_url = $1 WHERE product_id = $2 AND business_id = $3",
+            [imageUrl, productId, businessId]
+        );
+
+        // Remove the previous photo so old files don't pile up.
+        const oldUrl = existing.rows[0].image_url;
+        if (oldUrl && oldUrl.startsWith("/uploads/products/")) {
+            await fs.unlink(path.join(PRODUCT_UPLOAD_DIR, path.basename(oldUrl))).catch(() => {});
+        }
+
+        return res.json({ success: true, message: "Product photo saved.", image_url: imageUrl });
+    } catch (error) {
+        console.error("Save product image:", error.message);
+        return res.status(500).json({ message: "Failed to save the product photo." });
+    }
+};
+
+// DELETE /api/products/:id/image
+const handleDeleteProductImage7 = async (req, res) => {
+    const productId = Number(req.params.id);
+    const businessId = Number(req.staffUser?.business_id);
+
+    if (!Number.isInteger(businessId) || businessId < 1) {
+        return res.status(403).json({ message: "Your account is not assigned to an active business." });
+    }
+    if (!Number.isInteger(productId) || productId < 1) {
+        return res.status(400).json({ message: "Invalid product ID." });
+    }
+
+    try {
+        const existing = await service.query(
+            "SELECT image_url FROM public.products WHERE product_id = $1 AND business_id = $2",
+            [productId, businessId]
+        );
+        if (!existing.rowCount) {
+            return res.status(404).json({ message: "Product not found." });
+        }
+
+        await service.query(
+            "UPDATE public.products SET image_url = NULL WHERE product_id = $1 AND business_id = $2",
+            [productId, businessId]
+        );
+
+        const oldUrl = existing.rows[0].image_url;
+        if (oldUrl && oldUrl.startsWith("/uploads/products/")) {
+            await fs.unlink(path.join(PRODUCT_UPLOAD_DIR, path.basename(oldUrl))).catch(() => {});
+        }
+
+        return res.json({ success: true, message: "Product photo removed." });
+    } catch (error) {
+        console.error("Remove product image:", error.message);
+        return res.status(500).json({ message: "Failed to remove the product photo." });
+    }
+};
+
+module.exports = { handleGetData1, handlePostAddProduct2, handlePutProductsId3, handlePatchProductsIdStatus4, handleDeleteProductsId5, handlePostProductImage6, handleDeleteProductImage7 };

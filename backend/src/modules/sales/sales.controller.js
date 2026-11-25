@@ -19,6 +19,8 @@ const { requireRole } = require("../../middleware/auth.middleware");
 // GET /api/sales/summary
 
 // Express request handlers extracted from the original route declarations.
+const MAX_DISCOUNT_PERCENT = 100;
+
 const handlePostComplete1 = async (req, res) => {
     const { items } = req.body;
     const userId = req.staffUser.user_id;
@@ -35,6 +37,19 @@ const handlePostComplete1 = async (req, res) => {
     if (!Array.isArray(items) || items.length === 0) {
         return res.status(400).json({
             message: "Please add at least one product to the order."
+        });
+    }
+
+    // Discount: { type: "none" | "percent" | "amount", value: number }
+    const discountInput = req.body.discount || { type: "none", value: 0 };
+    const discountType = discountInput.type || "none";
+    const discountValue = Number(discountInput.value || 0);
+
+    if (!["none", "percent", "amount"].includes(discountType) ||
+        !Number.isFinite(discountValue) || discountValue < 0 ||
+        (discountType === "percent" && discountValue > MAX_DISCOUNT_PERCENT)) {
+        return res.status(400).json({
+            message: "Invalid discount. Percent must be 0 to 100."
         });
     }
 
@@ -65,7 +80,7 @@ const handlePostComplete1 = async (req, res) => {
         await client.query("BEGIN");
 
         const orderItems = [];
-        let totalAmount = 0;
+        let subtotal = 0;
 
         for (const [productId, quantity] of quantities) {
             const productResult = await client.query(
@@ -110,28 +125,47 @@ const handlePostComplete1 = async (req, res) => {
             }
 
             const unitPrice = Number(product.price);
-            const subtotal = unitPrice * quantity;
+            const lineTotal = unitPrice * quantity;
             const stockAfter = stockBefore - quantity;
 
-            totalAmount += subtotal;
+            subtotal += lineTotal;
 
             orderItems.push({
                 product_id: productId,
                 product_name: product.product_name,
                 quantity,
                 unit_price: unitPrice,
-                subtotal,
+                subtotal: lineTotal,
                 stock_before: stockBefore,
                 stock_after: stockAfter
             });
         }
 
+        // Work out the discount on the server, so the saved total is always correct.
+        let discountAmount = 0;
+        if (discountType === "percent") {
+            discountAmount = (subtotal * discountValue) / 100;
+        } else if (discountType === "amount") {
+            discountAmount = discountValue;
+        }
+        discountAmount = Number(Math.min(discountAmount, subtotal).toFixed(2));
+        const totalAmount = Number((subtotal - discountAmount).toFixed(2));
+
         const saleResult = await client.query(
             `INSERT INTO sales
-                (user_id, branch_id, total_amount, sale_date, sale_time)
-             VALUES ($1, $2, $3, CURRENT_DATE, LOCALTIME)
+                (user_id, branch_id, subtotal_amount, discount_type, discount_value,
+                 discount_amount, total_amount, sale_date, sale_time)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, CURRENT_DATE, LOCALTIME)
              RETURNING sale_id, sale_date, sale_time`,
-            [userId, branchId, totalAmount]
+            [
+                userId,
+                branchId,
+                subtotal,
+                discountType,
+                discountType === "none" ? 0 : discountValue,
+                discountAmount,
+                totalAmount
+            ]
         );
 
         const sale = saleResult.rows[0];
@@ -180,6 +214,8 @@ const handlePostComplete1 = async (req, res) => {
             success: true,
             message: "Sale completed successfully.",
             sale_id: sale.sale_id,
+            subtotal_amount: subtotal,
+            discount_amount: discountAmount,
             total_amount: totalAmount,
             items: orderItems
         });
